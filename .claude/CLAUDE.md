@@ -18,6 +18,8 @@ All recall (transcription, judging) is mocked. Put real delay in processing stat
 
 Use the design system (`knowledge/design-system.md` and `../tokens/tokens.json`). Semantic tokens only, never primitives directly.
 
+`tokens/tokens.json` is the source of truth for design tokens. It feeds Figma directly (DTCG format) and the app's CSS build. To change a token, edit it here; the app regenerates its CSS from this file (in `knowunity-app`, run `npm run tokens`).
+
 No type-instead option.
 
 ## Never
@@ -43,7 +45,7 @@ Don't add edge cases for completeness. Add them when they matter to the core exp
 - `knowledge/platform-constraints.md` — iOS canvas rules, touch targets, safe areas, spacing scale, accessibility, what's mocked vs real
 - `knowledge/active-recall-user-flow.md` — complete flow breakdown with entry points, loop states, edge cases
 - `knowledge/design-system.md` — token usage rules, color patterns, component structure, what to avoid
-- `../tokens/tokens.json` — all design token values (moved to the repo-root `tokens/` folder; source for the Style Dictionary CSS build)
+- `../tokens/tokens.json` — all design token values (repo-root `tokens/` folder; the shared source of truth consumed by Figma and by the app's CSS build in `knowunity-app`)
 - `knowledge/about-knowunity.md` — company background, existing features, business model, user context
 - `knowledge/app-inventory.md` — current app screens annotated with what students can do
 - `knowledge/sprint-kickoff-transcript.md` — full kickoff meeting with original thinking
