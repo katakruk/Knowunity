@@ -16,7 +16,7 @@ Mobile iOS only, 390px wide, dark mode.
 
 All recall (transcription, judging) is mocked. Put real delay in processing states and design what fills them.
 
-Use the design system (`knowledge/design-system.md` and `knowledge/tokens.json`). Semantic tokens only, never primitives directly.
+Use the design system (`knowledge/design-system.md` and `../tokens/tokens.json`). Semantic tokens only, never primitives directly.
 
 No type-instead option.
 
@@ -43,7 +43,7 @@ Don't add edge cases for completeness. Add them when they matter to the core exp
 - `knowledge/platform-constraints.md` — iOS canvas rules, touch targets, safe areas, spacing scale, accessibility, what's mocked vs real
 - `knowledge/active-recall-user-flow.md` — complete flow breakdown with entry points, loop states, edge cases
 - `knowledge/design-system.md` — token usage rules, color patterns, component structure, what to avoid
-- `knowledge/tokens.json` — all design token values
+- `../tokens/tokens.json` — all design token values (moved to the repo-root `tokens/` folder; source for the Style Dictionary CSS build)
 - `knowledge/about-knowunity.md` — company background, existing features, business model, user context
 - `knowledge/app-inventory.md` — current app screens annotated with what students can do
 - `knowledge/sprint-kickoff-transcript.md` — full kickoff meeting with original thinking

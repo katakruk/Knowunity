@@ -1,6 +1,6 @@
 # Knowie Design System
 
-Design token values live in `tokens.json`. This document covers when to use what, how components are structured, and what to avoid.
+Design token values live in `tokens/tokens.json` (at the repo root). This document covers when to use what, how components are structured, and what to avoid.
 
 ## Token layers
 
@@ -356,7 +356,7 @@ Examples:
 
 ### Token bindings
 
-Bind every color, spacing, and radius value to a semantic token from `tokens.json`. Never hardcode hex values or pixel dimensions that have semantic meaning.
+Bind every color, spacing, and radius value to a semantic token from `tokens/tokens.json`. Never hardcode hex values or pixel dimensions that have semantic meaning.
 
 **Colors:** Use `figma.variables.setBoundVariableForPaint()` to bind fill and stroke colors
 **Spacing:** Use `setBoundVariable('paddingLeft', variable)` for padding and gaps
@@ -420,7 +420,7 @@ Examples:
 
 ### Never invent values
 
-If `tokens.json` doesn't have the value you need, do not make one up. Stop and say "this token is missing" rather than filling the gap with a hardcoded value. Inventing values fractures the system.
+If `tokens/tokens.json` doesn't have the value you need, do not make one up. Stop and say "this token is missing" rather than filling the gap with a hardcoded value. Inventing values fractures the system.
 
 Examples of what NOT to do:
 - Using `#7b65e0` directly instead of a token reference.
@@ -523,6 +523,6 @@ If you're working on a design and the tokens don't support it, do not work aroun
 1. **Document the gap** — what's missing, what you're trying to build, why existing tokens don't work.
 2. **Validate the design** — is the design asking for something intentionally outside the system, or is the system incomplete?
 3. **Propose a token** — if the system is incomplete, propose the missing token with its purpose, value, and where it fits in the structure.
-4. **Update `tokens.json`** — add the token properly, then use it.
+4. **Update `tokens/tokens.json`** — add the token properly, then use it.
 
 Systems grow by adding intentional pieces, not by letting components invent their own values. Treat every gap as feedback on the system, not a license to bypass it.

@@ -1,0 +1,12 @@
+{
+  "name": "knowunity-sprint",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Design tokens and build tooling for the Knowunity Voice Active-Recall sprint.",
+  "scripts": {
+    "tokens": "style-dictionary build --config sd.config.mjs"
+  },
+  "devDependencies": {
+    "style-dictionary": "^5.5.3"
+  }
+}
