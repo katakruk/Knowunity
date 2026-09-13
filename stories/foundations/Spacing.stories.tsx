@@ -85,7 +85,7 @@ function SpaceRow({ token, cssVar, px, description }: SpaceToken) {
           <code style={{ fontFamily: 'monospace', fontSize: 13, color: '#e4e0ff', fontWeight: 600 }}>
             {token}
           </code>
-          <code style={{ fontFamily: 'monospace', fontSize: 11, color: 'rgba(245,243,255,0.45)' }}>
+          <code style={{ fontFamily: 'monospace', fontSize: 11, color: 'rgba(245,243,255,0.65)' }}>
             {cssVar}
           </code>
           <span style={{ fontFamily: 'monospace', fontSize: 12, color: isNegative ? '#ff8585' : 'rgba(245,243,255,0.7)', fontWeight: 600 }}>
@@ -104,7 +104,7 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
   return (
     <div style={{
       fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em',
-      color: 'rgba(245,243,255,0.35)', padding: '24px 0 8px',
+      color: 'rgba(245,243,255,0.55)', padding: '24px 0 8px',
       borderBottom: '1px solid rgba(255,255,255,0.08)', marginBottom: 0,
     }}>
       {children}

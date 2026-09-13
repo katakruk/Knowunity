@@ -53,7 +53,7 @@ function RadiusRow({ token, cssVar, px, description }: RadiusToken) {
           <code style={{ fontFamily: 'monospace', fontSize: 13, color: '#e4e0ff', fontWeight: 600 }}>
             {token}
           </code>
-          <code style={{ fontFamily: 'monospace', fontSize: 11, color: 'rgba(245,243,255,0.45)' }}>
+          <code style={{ fontFamily: 'monospace', fontSize: 11, color: 'rgba(245,243,255,0.65)' }}>
             {cssVar}
           </code>
           <span style={{ fontFamily: 'monospace', fontSize: 12, color: 'rgba(245,243,255,0.7)', fontWeight: 600 }}>
@@ -73,7 +73,7 @@ function RadiusScale() {
     <div style={{ padding: 24, fontFamily: 'system-ui, sans-serif', maxWidth: 900 }}>
       <div style={{
         fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em',
-        color: 'rgba(245,243,255,0.35)', paddingBottom: 8,
+        color: 'rgba(245,243,255,0.55)', paddingBottom: 8,
         borderBottom: '1px solid rgba(255,255,255,0.08)', marginBottom: 0,
       }}>
         Corner Radius

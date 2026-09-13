@@ -38,15 +38,15 @@ function Swatch({ token, cssVar, raw, resolved, description }: Token) {
         <div style={{ fontFamily: 'monospace', fontSize: 13, color: '#e4e0ff', fontWeight: 600, lineHeight: 1.4 }}>
           {token}
         </div>
-        <div style={{ fontFamily: 'monospace', fontSize: 11, color: 'rgba(245,243,255,0.45)', marginTop: 2 }}>
+        <div style={{ fontFamily: 'monospace', fontSize: 11, color: 'rgba(245,243,255,0.65)', marginTop: 2 }}>
           {cssVar}
         </div>
-        <div style={{ fontFamily: 'monospace', fontSize: 11, color: 'rgba(245,243,255,0.45)', marginTop: 1 }}>
+        <div style={{ fontFamily: 'monospace', fontSize: 11, color: 'rgba(245,243,255,0.65)', marginTop: 1 }}>
           {raw !== resolved ? `${raw} → ${resolved}` : resolved}
         </div>
         <div style={{
           fontSize: 11,
-          color: description ? 'rgba(245,243,255,0.6)' : 'rgba(245,243,255,0.25)',
+          color: description ? 'rgba(245,243,255,0.6)' : 'rgba(245,243,255,0.55)',
           fontStyle: description ? 'normal' : 'italic',
           marginTop: 3,
           lineHeight: 1.5,
@@ -68,7 +68,7 @@ function Group({ label, tokens }: GroupProps) {
     <div style={{ marginBottom: 40 }}>
       <div style={{
         fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em',
-        color: 'rgba(245,243,255,0.35)', marginBottom: 8, paddingBottom: 6,
+        color: 'rgba(245,243,255,0.55)', marginBottom: 8, paddingBottom: 6,
         borderBottom: '1px solid rgba(255,255,255,0.08)',
       }}>
         {label}

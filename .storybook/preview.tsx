@@ -1,4 +1,5 @@
 import type { Preview } from '@storybook/nextjs-vite'
+import React from 'react'
 
 // Load the generated design-system CSS (CSS custom properties for all
 // tokens — colors, spacing, typography, etc.). Every story renders with
@@ -8,6 +9,13 @@ import type { Preview } from '@storybook/nextjs-vite'
 import '../styles/tokens.css'
 
 const preview: Preview = {
+  decorators: [
+    (Story) => (
+      <div style={{ backgroundColor: '#090c18', minHeight: '100vh' }}>
+        <Story />
+      </div>
+    ),
+  ],
   parameters: {
     // Dark mode only — one background option removes the light/dark
     // toggle from the toolbar so stories are never accidentally viewed

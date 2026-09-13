@@ -1,0 +1,84 @@
+.root {
+  display: flex;
+  align-items: center;
+  gap: var(--space-200);
+  padding-inline: var(--space-200);
+  block-size: 56px;
+}
+
+/* ── Plus button ──────────────────────────────────────────────────────────── */
+
+.plusBtn {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--touch-target-minimum);
+  block-size: var(--touch-target-minimum);
+  border: none;
+  border-radius: var(--radius-full);
+  background-color: var(--background-surface);
+  color: var(--text-primary);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.plusBtn:focus-visible {
+  outline: var(--stroke-heavy-border) solid var(--border-focus);
+}
+
+.plusIcon {
+  inline-size: var(--icon-250);
+  block-size: var(--icon-250);
+}
+
+/* ── Text input ───────────────────────────────────────────────────────────── */
+
+.input {
+  flex: 1;
+  block-size: var(--touch-target-minimum);
+  padding-inline: var(--space-300);
+  border: none;
+  border-radius: var(--radius-full);
+  background-color: var(--background-input);
+  color: var(--text-primary);
+  font-family: var(--typography-body-m-regular-family);
+  font-size: var(--typography-body-m-regular-size);
+  font-weight: var(--typography-body-m-regular-weight);
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.input:focus {
+  outline: var(--stroke-thin-border) solid var(--border-focus);
+}
+
+/* ── Mic button ───────────────────────────────────────────────────────────── */
+
+.micBtn {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--touch-target-minimum);
+  block-size: var(--touch-target-minimum);
+  border: none;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.micBtn:focus-visible {
+  outline: var(--stroke-heavy-border) solid var(--border-focus);
+}
+
+.micIcon {
+  inline-size: var(--icon-250);
+  block-size: var(--icon-250);
+}

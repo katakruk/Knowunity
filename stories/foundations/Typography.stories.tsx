@@ -73,7 +73,7 @@ function TypeRow({ entry, showDivider }: { entry: TypEntry; showDivider: boolean
       {showDivider && (
         <div style={{
           fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em',
-          color: 'rgba(245,243,255,0.35)', padding: '24px 0 8px',
+          color: 'rgba(245,243,255,0.55)', padding: '24px 0 8px',
           borderBottom: '1px solid rgba(255,255,255,0.08)', marginBottom: 0,
         }}>
           {CATEGORY_LABELS[categoryOf(entry.scale)]}
@@ -102,7 +102,7 @@ function TypeRow({ entry, showDivider }: { entry: TypEntry; showDivider: boolean
           <MetaPill label="weight"  value={entry.weight} />
           <MetaPill label="lh"      value={entry.lineHeight} />
           <MetaPill label="ls"      value={entry.letterSpacing} />
-          <span style={{ fontSize: 11, color: 'rgba(245,243,255,0.25)', fontStyle: 'italic' }}>
+          <span style={{ fontSize: 11, color: 'rgba(245,243,255,0.55)', fontStyle: 'italic' }}>
             No description
           </span>
         </div>
@@ -113,8 +113,8 @@ function TypeRow({ entry, showDivider }: { entry: TypEntry; showDivider: boolean
 
 function MetaPill({ label, value }: { label: string; value: string }) {
   return (
-    <span style={{ fontSize: 11, fontFamily: 'monospace', color: 'rgba(245,243,255,0.45)' }}>
-      <span style={{ color: 'rgba(245,243,255,0.3)' }}>{label}: </span>
+    <span style={{ fontSize: 11, fontFamily: 'monospace', color: 'rgba(245,243,255,0.65)' }}>
+      <span style={{ color: 'rgba(245,243,255,0.55)' }}>{label}: </span>
       {value}
     </span>
   )

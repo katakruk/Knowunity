@@ -100,11 +100,19 @@
   --icon-250: 20px; /** 20px icon box for width and height of an icon frame. */
   --icon-300: 24px; /** 24px icon box for width and height of an icon frame. */
   --icon-400: 32px; /** 32px icon box for width and height of an icon frame. */
+  --icon-450: 36px; /** 36px icon box for width and height of an icon frame. Used by the small circular button. */
+  --icon-600: 48px; /** 48px icon box for width and height of an icon frame. Used by the large circular button. */
   --illustration-500: 40px; /** 40px illustration box for mascot and spot illustration sizing. */
   --illustration-800: 64px; /** 64px illustration box for mascot and spot illustration sizing. */
   --illustration-1500: 120px; /** 120px illustration box for mascot and spot illustration sizing. */
   --illustration-2500: 200px; /** 200px illustration box for mascot and spot illustration sizing. */
   --illustration-4000: 320px; /** 320px illustration box for mascot and spot illustration sizing. */
+  --control-height-s: 32px; /** 32px control height for the small size of buttons and other interactive controls. */
+  --control-height-m: 40px; /** 40px control height for the medium size of buttons and other interactive controls. */
+  --control-height-l: 56px; /** 56px control height for the large size of buttons and other interactive controls. */
+  --control-circular-s: 48px; /** 48px diameter for the small circular button, used for secondary recording actions. Equal to the minimum touch target, so it needs no padding around it. */
+  --control-circular-l: 80px; /** 80px diameter for the large circular button, used for the one primary recording action on a screen. */
+  --touch-target-minimum: 48px; /** 48px minimum hit area for any interactive control. iOS requires 44pt; this system rounds up to 48px. A control shorter than this needs padding around it to reach the minimum. */
   --responsive-device-desktop: desktop; /** Name of the desktop breakpoint for conditional logic in code. */
   --responsive-device-tablet: tablet; /** Name of the tablet breakpoint for conditional logic in code. */
   --responsive-device-mobile: mobile; /** Name of the mobile breakpoint for conditional logic in code. */

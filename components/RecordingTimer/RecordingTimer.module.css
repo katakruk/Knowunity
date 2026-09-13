@@ -1,0 +1,53 @@
+/* RecordingTimer — 240px circular recording indicator with ripple animation.
+   Animation spec from project_recording_animation memory. */
+
+.root {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 240px;
+  block-size: 240px;
+}
+
+/* ── Ripple circles ───────────────────────────────────────────────────────── */
+
+@keyframes ripple {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+.ripple {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-full);
+  border: 3px solid rgba(157, 127, 255, 0.2);
+  animation: ripple 2s ease-out infinite;
+}
+
+.ripple2 { animation-delay: 0.5s; }
+.ripple3 { animation-delay: 1s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ripple { animation: none; opacity: 0.15; transform: scale(0.8); }
+}
+
+/* ── Timer text ───────────────────────────────────────────────────────────── */
+
+.time {
+  position: relative;
+  z-index: 1;
+  font-family: var(--typography-headline-l-family);
+  font-size: var(--typography-headline-l-size);
+  font-weight: var(--typography-headline-l-weight);
+  line-height: 1;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--typography-headline-l-letter-spacing);
+}

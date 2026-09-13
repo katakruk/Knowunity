@@ -1,0 +1,85 @@
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: var(--space-200);
+  block-size: 56px;
+}
+
+.iconBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--touch-target-minimum);
+  block-size: var(--touch-target-minimum);
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+  border-radius: var(--radius-200);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.iconBtn:focus-visible {
+  outline: var(--stroke-heavy-border) solid var(--border-focus);
+}
+
+.icon {
+  inline-size: var(--icon-300);
+  block-size: var(--icon-300);
+}
+
+/* ── Centre chips ─────────────────────────────────────────────────────────── */
+
+.chips {
+  display: flex;
+  align-items: center;
+  gap: var(--space-200);
+}
+
+.proBadge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-100);
+  padding: var(--space-100) var(--space-200);
+  border-radius: var(--radius-200);
+  border: 1px solid var(--pro-bold);
+  background-color: transparent;
+}
+
+.proText {
+  font-family: var(--typography-caption-m-bold-family);
+  font-size: var(--typography-caption-m-bold-size);
+  font-weight: var(--typography-caption-m-bold-weight);
+  color: var(--pro-bold);
+  letter-spacing: 0.05em;
+}
+
+.upgradeText {
+  font-family: var(--typography-caption-m-bold-family);
+  font-size: var(--typography-caption-m-bold-size);
+  font-weight: var(--typography-caption-m-bold-weight);
+  color: var(--pro-bold);
+}
+
+.counter {
+  display: flex;
+  align-items: center;
+  gap: var(--space-050);
+  font-family: var(--typography-body-s-bold-family);
+  font-size: var(--typography-body-s-bold-size);
+  font-weight: var(--typography-body-s-bold-weight);
+  color: var(--text-primary);
+}
+
+.xpIcon {
+  inline-size: 16px;
+  block-size: 16px;
+  color: var(--accent-blue-bold);
+}
+
+.flameIcon {
+  inline-size: 16px;
+  block-size: 16px;
+  color: var(--accent-coral-bold);
+}
