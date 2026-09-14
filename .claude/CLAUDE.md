@@ -41,7 +41,7 @@ Don't add edge cases for completeness. Add them when they matter to the core exp
 - `knowledge/design-brief.md` — the problem, the bet, success metrics, hard constraints, what's open to design, contraints and rules that govern every state
 
 **Read when designing specific aspects:**
-- `knowledge/voice-ux-reference.md` — voice interaction principles, state checklist, permission patterns, latency design (read before designing recall loop)
+- `knowledge/voice-ux.md` — voice interaction principles, state checklist, permission patterns, latency design (read before designing recall loop)
 - `knowledge/platform-constraints.md` — iOS canvas rules, touch targets, safe areas, spacing scale, accessibility, what's mocked vs real
 - `knowledge/active-recall-user-flow.md` — complete flow breakdown with entry points, loop states, edge cases
 - `knowledge/design-system.md` — token usage rules, color patterns, component structure, what to avoid

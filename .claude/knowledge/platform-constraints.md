@@ -90,7 +90,7 @@ Real students are on everything from an iPhone SE (320px) up to a Pro Max
   return on release. Nothing should feel dead under a finger.
 - **Voice input is push-to-talk.** Hold or tap to record, explicit stop to send,
   cancel and re-record before sending. No auto-detection of when someone has
-  finished speaking. See `05-voice-ux-reference.md`.
+  finished speaking. See `voice-ux.md`.
 
 ---
 
