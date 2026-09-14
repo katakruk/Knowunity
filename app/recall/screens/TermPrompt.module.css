@@ -1,0 +1,46 @@
+/* Term Prompt. Figma 13610:10191 (first), 13644:14133 (try again),
+ * 13610:10217 (hint), 13610:10242 (next term). One layout, three contents. */
+
+.root {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-200);
+  padding-block-start: var(--space-400);
+}
+
+/* Knowie's prompt: small mascot beside a tailed bubble. */
+.prompt {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-200);
+}
+
+/* The first-attempt and retry bubbles carry a lead-in line, a blank line, then
+ * the question. `MessageBubble` renders `message` as one paragraph, so the break
+ * has to survive as whitespace. Targeting the descendant `p` rather than a class,
+ * since the component exposes no hook for its inner text. */
+.promptBubble p {
+  white-space: pre-line;
+}
+
+/* ── Mic footer ──────────────────────────────────────────────────────────────
+   Primary action low in the thumb zone, per platform-constraints.md. */
+
+.micArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-300);
+  padding-block-end: var(--space-800);
+}
+
+.tapToSpeak {
+  margin: 0;
+  color: var(--text-secondary);
+  font-family: var(--typography-body-s-regular-family);
+  font-size: var(--typography-body-s-regular-size);
+  font-weight: var(--typography-body-s-regular-weight);
+  line-height: var(--typography-body-s-regular-line-height);
+  letter-spacing: var(--typography-body-s-regular-letter-spacing);
+}

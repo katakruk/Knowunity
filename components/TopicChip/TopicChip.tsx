@@ -2,7 +2,7 @@
 
 import React from 'react'
 import styles from './TopicChip.module.css'
-import { FlashcardIcon, QuizIcon, NoteIcon, SummaryIcon } from '../icons'
+import { FlashcardIcon, QuizIcon, NoteIcon, SummaryIcon, MicSmallIcon } from '../icons'
 
 export type TopicChipType = 'flashcard' | 'quiz' | 'note' | 'summary' | 'activeRecall'
 
@@ -11,7 +11,9 @@ const ICONS: Record<TopicChipType, React.ComponentType<{ className?: string }> |
   quiz: QuizIcon,
   note: NoteIcon,
   summary: SummaryIcon,
-  activeRecall: null,
+  // Was null, which contradicted this component's own documented behaviour and the
+  // Figma frame: Speak to Learn is drawn with a mic. Fixed 2026-09-14.
+  activeRecall: MicSmallIcon,
 }
 
 export interface TopicChipProps {

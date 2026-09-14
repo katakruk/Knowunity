@@ -1,0 +1,40 @@
+/* First-Run Education, Figma 13610:10462.
+ * Centred mascot, headline, paragraph. No message bubble on this frame. */
+
+.root {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-600);
+  text-align: center;
+}
+
+.heading {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--typography-headline-m-family);
+  font-size: var(--typography-headline-m-size);
+  font-weight: var(--typography-headline-m-weight);
+  line-height: var(--typography-headline-m-line-height);
+  letter-spacing: var(--typography-headline-m-letter-spacing);
+}
+
+/* body-m, not body-l: at 358px the Figma paragraph wraps to three lines and
+ * body-l takes four. */
+.body {
+  margin: 0;
+  color: var(--text-secondary);
+  font-family: var(--typography-body-m-regular-family);
+  font-size: var(--typography-body-m-regular-size);
+  font-weight: var(--typography-body-m-regular-weight);
+  line-height: var(--typography-body-m-regular-line-height);
+  letter-spacing: var(--typography-body-m-regular-letter-spacing);
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-300);
+}

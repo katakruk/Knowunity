@@ -11,7 +11,7 @@ import '../styles/tokens.css'
 const preview: Preview = {
   decorators: [
     (Story) => (
-      <div style={{ backgroundColor: '#090c18', minHeight: '100vh' }}>
+      <div style={{ backgroundColor: 'var(--background-page)', minHeight: '100vh' }}>
         <Story />
       </div>
     ),
@@ -26,6 +26,9 @@ const preview: Preview = {
       values: [
         {
           name: 'dark',
+          // Literal because Storybook's backgrounds addon writes this straight
+          // onto the preview canvas, outside the token scope. Value is
+          // --background-page; change it with that token.
           value: '#090c18',
         },
       ],

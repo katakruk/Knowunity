@@ -36,6 +36,10 @@
 
 .input {
   flex: 1;
+  /* An <input> carries an intrinsic minimum width from its default size
+   * attribute, and flex items do not shrink below that unless told to. Without
+   * this the bar overflows the canvas at 320px (iPhone SE). Added 2026-09-14. */
+  min-inline-size: 0;
   block-size: var(--touch-target-minimum);
   padding-inline: var(--space-300);
   border: none;

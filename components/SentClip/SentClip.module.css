@@ -1,0 +1,13 @@
+/* The student's answer, sitting on their side of the exchange. */
+
+.root {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.player {
+  /* Narrower than full width so it reads as one side of a conversation rather
+   * than a control still waiting to be used. The review-audio bar runs full
+   * width precisely because it is still actionable; this one is a record. */
+  inline-size: 60%;
+}
