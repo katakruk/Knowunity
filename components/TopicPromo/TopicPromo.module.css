@@ -1,0 +1,116 @@
+/*
+ * Every value here resolves to a CSS variable from styles/tokens.css.
+ * Structure mirrors the Figma component (Topic Promo 13646:15298):
+ * the row owns fill, radius and outer padding; .item owns the content
+ * rhythm; the indicator sits in its own box.
+ */
+
+/* ── Row ──────────────────────────────────────────────────────────────────── */
+
+.root {
+  display: flex;
+  align-items: center;
+  inline-size: 100%;
+  min-block-size: var(--touch-target-minimum);
+  padding-block: var(--space-100);
+  padding-inline: var(--space-400);
+  border: none;
+  border-radius: var(--radius-600);
+  background-color: var(--background-surface);
+  color: inherit;
+  text-align: start;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 120ms ease;
+}
+
+.root:focus-visible {
+  outline: var(--stroke-heavy-border) solid var(--border-focus);
+}
+
+/*
+ * Selected layers background-stacking over background-surface, the same way the
+ * Figma variant stacks two fills. A gradient of one flat colour is the only way
+ * to get a second background layer without inventing a value.
+ */
+.selected {
+  background-image: linear-gradient(
+    var(--background-stacking),
+    var(--background-stacking)
+  );
+}
+
+/* ── Content ──────────────────────────────────────────────────────────────── */
+
+.item {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: var(--space-300);
+  padding-block: var(--space-300);
+  min-inline-size: 0;
+}
+
+.icon {
+  flex: none;
+  inline-size: var(--icon-400);
+  block-size: var(--icon-400);
+}
+
+.iconBody {
+  fill: var(--pro-accent);
+}
+
+.iconDetail {
+  fill: var(--accent-brand-on-bold);
+}
+
+/* ── Label ────────────────────────────────────────────────────────────────── */
+
+.label {
+  flex: 1;
+  min-inline-size: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-family: var(--typography-body-m-regular-family);
+  font-size: var(--typography-body-m-regular-size);
+  font-weight: var(--typography-body-m-regular-weight);
+  line-height: var(--typography-body-m-regular-line-height);
+  letter-spacing: var(--typography-body-m-regular-letter-spacing);
+  color: var(--text-primary);
+}
+
+.labelSelected {
+  font-family: var(--typography-body-m-bold-family);
+  font-size: var(--typography-body-m-bold-size);
+  font-weight: var(--typography-body-m-bold-weight);
+  line-height: var(--typography-body-m-bold-line-height);
+  letter-spacing: var(--typography-body-m-bold-letter-spacing);
+}
+
+/* ── Selection indicator ──────────────────────────────────────────────────── */
+
+.indicator {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--icon-300);
+  block-size: var(--icon-300);
+  border-radius: var(--radius-full);
+}
+
+.indicatorUnselected {
+  border: var(--stroke-heavy-border) solid var(--border-default);
+}
+
+.indicatorSelected {
+  background-color: var(--accent-brand-bold);
+  color: var(--accent-brand-on-bold);
+}
+
+.check {
+  inline-size: var(--icon-200);
+  block-size: var(--icon-200);
+}
