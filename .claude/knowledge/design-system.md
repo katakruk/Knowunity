@@ -262,9 +262,11 @@ Button / Circular
 ```
 
 **Token bindings:**
-- Background (Default) → `interactive.secondary`
-- Background (Pressed) → `interactive.secondaryActive`
-- Icon color → `interactive.onSecondary`
+- Background (Default) → `interactive.primary`
+- Background (Pressed) → `interactive.primaryActive`
+- Icon color → `interactive.onPrimary`
+
+This is a near-white circle with a dark glyph, not a translucent one. Corrected 2026-09-13: this section previously documented the `interactive.secondary` ladder, which the Figma set never matched. The set binds `interactive/primary` and `interactive/primaryActive`, and that is what the built component uses. Note that Figma binds the glyph to `accent/brand/onBold` rather than `interactive.onPrimary`; that skips the matching "on" token, so the built component uses `interactive.onPrimary` and Figma is the thing to fix.
 
 **When to use:** Recording controls in the active recall flow - pause/resume recording, delete recording, send response.
 
@@ -301,6 +303,49 @@ Audio Playback
 
 ---
 
+### Topic Promo
+
+**What it is:** Single-select topic row for the Topic Selection screen. One topic per session, so rows behave as radio buttons, not filters.
+
+**Variants:**
+- `State` - Selected, Unselected
+
+**Properties:**
+- `topic` (text, default "Ancient Greece") - the topic name
+
+**Structure:**
+```
+Topic Promo
+└─ .Superlist Item          [grows to fill; owns content padding and gap]
+    ├─ Icon / Notebook      [box bound to icon.400]
+    │   └─ Glyph
+    ├─ Label                [text, bound to topic property]
+    └─ Right Accessory Container
+        └─ .List Right Accessory   [Type=Check → checkbox, variant True/False]
+```
+
+**Token bindings:**
+- Row fill → `background.surface`, plus `background.stacking` layered on top in Selected
+- Row padding → `space.100` vertical, `space.400` horizontal
+- Row gap → `space.0`
+- Row radius → `radius.600`
+- `.Superlist Item` padding → `space.300` vertical; gap → `space.300`
+- `Icon / Notebook` width and height → `icon.400`
+- Glyph fills → `pro.accent` (outline), `accent.brand.onBold` (detail)
+- Label → `text.primary`, `typography.body.m.bold` in Selected and `typography.body.m.regular` in Unselected
+
+**When to use:** The recents list on the Topic Selection screen, where the student picks the one topic for the session.
+
+**What states mean:**
+- **Unselected** - available but not chosen. Plain surface, regular label weight, empty circle.
+- **Selected** - the chosen topic. `background.stacking` lifts the row off the surface, the label goes bold, and the checkbox fills. Only one row in a list may be Selected at a time.
+
+**What not to do:** Don't use it as a filter or a multi-select list; the session takes exactly one topic, so a second Selected row is a bug. Don't rely on the lifted fill alone to carry selection, since the checkbox and label weight are what make it legible without colour. Don't reach for it for the study-mode rail on the Main Screen; that's `topic chip`.
+
+**Known gaps:** the glyph is a raw vector group, not a swap slot, so a different subject icon means editing vectors on the instance. The file's `iconSlot` set is the convention for that and this component does not use it yet. `pro.accent` is also documented as legacy, so the outline colour is worth revisiting.
+
+---
+
 ## Component conventions
 
 When creating new components, follow these naming and structure patterns:
@@ -322,6 +367,7 @@ Examples:
 - Use single capital letter for sizes: `S`, `M`, `L`, `XL`
 - Use full words for states: `Default`, `Hover`, `Pressed`, `Disabled`
 - Use descriptive words for types: `Primary`, `Secondary`, `Destructive`
+- For chosen-or-not controls, put `Selected` / `Unselected` on the `State` axis rather than inventing a second axis
 
 ### Layer naming inside components
 
@@ -338,6 +384,10 @@ Examples:
 - `Tail` (for speech bubble pointers)
 - `Waveform` (for audio visualization)
 - `Progress` (for progress indicators)
+
+**Names that come from a library:** nested instances imported from a shared library keep their original dot-prefixed names, e.g. `.Superlist Item`, `.List Right Accessory`. The leading dot marks a private component that isn't meant to be placed directly. Don't rename these to match local style; the prefix is the signal.
+
+**Auto-generated names are never acceptable.** `Group 2136139932`, `Frame 2136139879`, `Rectangle 4` and similar mean the layer was never named. Rename before the component is published.
 
 ### Properties
 
@@ -361,8 +411,39 @@ Bind every color, spacing, and radius value to a semantic token from `tokens/tok
 **Colors:** Use `figma.variables.setBoundVariableForPaint()` to bind fill and stroke colors
 **Spacing:** Use `setBoundVariable('paddingLeft', variable)` for padding and gaps
 **Radius:** Use `setBoundVariable('cornerRadius', variable)` for corner radius
+**Icon and illustration boxes:** bind both `width` and `height` to the same `icon.*` or `illustration.*` token. A fixed square that only binds one dimension leaves the other as a raw number.
 
 If a value you need doesn't have a token, stop and flag it rather than hardcoding. The system might be incomplete.
+
+Two things that silently break bindings:
+
+- **`constrainProportions` must be false before binding both width and height.** With it left on, Figma accepts each call but keeps only the most recent one, so you end up with one dimension bound and one raw, and no error to tell you.
+- **A row inherited from a screen usually carries `layoutAlign: STRETCH`.** Inside a component set's auto-layout that makes the variant collapse to its content width. Set `layoutAlign` back to `INHERIT` and fix the width after combining.
+
+Audit before you call a component done: walk every node and assert that each visible fill, each non-zero padding and gap, each non-zero radius, and each icon box dimension resolves to a variable. Anything reported as a raw value is unfinished work.
+
+### Structuring a list row
+
+Rows in a selectable list separate concerns across three levels. Follow this when adding another one:
+
+```
+Row                          [fill, radius, outer padding, the tap target]
+└─ .Superlist Item           [layoutGrow 1; content padding and gap]
+    ├─ Icon / [Name]         [fixed box bound to an icon.* token]
+    ├─ Label                 [layoutGrow 1, so long topics truncate rather than push]
+    └─ Right Accessory Container
+        └─ .List Right Accessory
+```
+
+The outer row owns everything that makes it look like a row. The inner item owns the content rhythm. The accessory sits in its own container so swapping a check for a chevron doesn't disturb the label. See **Topic Promo** for a built example.
+
+### Where components live
+
+New components go on **🎨 Mascot & components**, inside a named `SECTION` rather than loose on the canvas. Give the section the component's name, place it clear of existing content, and bind the section's own padding and gap to spacing tokens like any other container.
+
+Give the component set auto-layout after `combineAsVariants` so the variants stack readably. Variants are placed at (0,0) on top of each other until you do.
+
+Write the description on the **component set**, not on individual variants. That description is what `## Components` in this file quotes verbatim, so write it as the usage guidance you want other people to read: what it is, when to use it, and what not to use it for.
 
 ---
 
