@@ -6,7 +6,7 @@ Voice active-recall feature for Knowunity. Student speaks to explain a term, Kno
 
 **Concept:** Student speaks their understanding of a term, Knowie judges it and responds in text.
 
-**Where it lives:** Primary entry: Exam Prep step card. Secondary entry: Tools overlay + chip rail on main screen.
+**Where it lives:** Primary entry: AI chat main screen (Tools overlay + chip rail). Secondary entry: Exam Prep step card.
 
 ## Decisions
 
@@ -14,7 +14,7 @@ No text transcript during recording, because editing would turn this into a text
 
 "Show transcript" link after sending, because students need to verify judgment and reflect on explanation.
 
-Two entry points (Exam Prep + Tools), because exam path drives completion and tools path drives discovery.
+Two entry points, primary in the AI chat and secondary in Exam Prep, because the chat path drives discovery and the exam path drives completion.
 
 Main screen shows Speak to Learn as focal point for first-timers then becomes a chip, because temporary prominence aids discovery without permanent clutter.
 
