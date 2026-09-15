@@ -1,0 +1,11 @@
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Local agent config. settings.local.json holds approved-command history,
+# which can capture access tokens pasted into commands. Never commit it.
+.claude/settings.local.json
+
+# Scratch copies of the two project repos, used during the 2026-09-15 merge
+_src-app/
+_src-sprint/
