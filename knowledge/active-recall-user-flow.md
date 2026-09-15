@@ -60,23 +60,12 @@ the topic is chosen. It resolves on the following screens into a continuous bar 
 
 ↓
 
-### 4a. Mic Primer
-**Type:** SCREEN
-**Design:** Leave for Code
-**Description:** One line on why the mic is needed, and a button that triggers the OS dialog.
-Sits between topic commit and term 1, because the first-run education screen is two screens
-earlier and a request that appears unannounced is the one that gets denied.
-**User Action:** Tap to continue into the OS dialog
-
-↓
-
-### 4b. Mic Permission
-**Type:** STATE
-**Design:** Leave for Code
-**Description:** iOS system dialog requests microphone access. Requested after topic
-commit, so the ask lands when the student already has something they want to talk about.
-**User Action:** Allow / Don't Allow
-**Next:** Allow → Term Prompt. Don't Allow → Mic Denied (see Edge Cases)
+### ~~4. Mic Primer and Mic Permission~~ — cut from MVP
+**Moved to future iterations, 2026-09-14.** Mic access is assumed granted, because this is not
+the student's first time in the app. The prototype exists to test the recall loop and permission
+was never the thing under test. Topic Selection goes straight to the Term Prompt. The microphone
+is fully mocked, since real capture would raise a browser permission prompt and reintroduce
+exactly what this removes.
 
 ---
 
@@ -121,8 +110,9 @@ fumbled start never forces a bad submission.
 ### 8. Processing
 **Type:** STATE
 **Design:** MUST HAVE
+**Figma:** 13612:11949
 **Description:** "Knowie is thinking" wait state, orbiting particles animation. Judging is
-mocked, so this carries a real delay: a fixed 2.5s on every turn.
+mocked, so this carries a real delay: a fixed 5s on every turn.
 **User Action:** Wait
 **Next:** Pass → 9a. Partial → 9b. Fail → 9c. Clip under ~1s → "Didn't catch that" (see Edge
 Cases), which does not count as an attempt.
@@ -247,13 +237,13 @@ Named here so the gaps are visible, not to imply they are designed:
 
 - **Success Screen (#10) and XP Display (#11).** No frames exist, despite #10 being MUST HAVE.
 - **Processing for the Hint and Try again instances.** Both branches connect Review Audio
-  straight to Feedback Positive, skipping #8.
+  straight to Feedback Positive, skipping #8. (Processing itself does have a frame,
+  13612:11949, corrected 2026-09-14.)
 - **Feedback Negative (9c) has no incoming connector.** Processing only connects to
   Feedback Positive and Feedback Almost There.
 - **Reveal Answer (9d).** (Understanding Check is no longer a gap: cut from MVP.)
 - **Connectors for Section 1.** Main Screen, First-Run Education, Topic Selection and Term
   Prompt are not linked on the canvas.
-- **Mic Primer (#4a).** New as of 2026-09-14, no frame.
 - **Summary variants.** The Success Screen now has three headline variants; none are designed.
 - **Resume offer in the chat thread.** New as of 2026-09-14, no frame.
 
@@ -263,13 +253,10 @@ Named here so the gaps are visible, not to imply they are designed:
 
 Excluded from the main flow visualisation on purpose. All Leave for Code.
 
-- **Didn't catch that:** a clip under about a second goes through the normal 2.5s processing
+- **Didn't catch that:** a clip under about a second goes through the normal 5s processing
   wait and returns a gentle "didn't catch that". Does not count as an attempt, does not
   consume the hint. Send is never disabled, because push-to-talk means the student controls
   send. This is the one case where the mock overrides the hard-coded verdict.
-- **Mic denied:** explain what the mic is for, how to enable it in Settings, and offer a route
-  out to Quiz or Flashcards. No text fallback exists by design, so this screen does not
-  pretend the feature works without a mic.
 - **Exit Confirmation:** "Are you sure you want to leave? Progress will be saved". Resume
   restores the exact state: unlocked hint, attempts used, feedback being read. An unsent
   recording is discarded, and that does not break the promise: the student never sent it, so
@@ -286,3 +273,5 @@ Excluded from the main flow visualisation on purpose. All Leave for Code.
 - **Show Transcript** is cut from the MVP (2026-09-14, moved to future iterations). With
   judging mocked there is no real transcription, so the panel could only show pre-written
   words the student never said. Revisit once real speech-to-text exists.
+- **Mic denied** went with the rest of the permission flow (2026-09-14). Access is assumed
+  granted, so there is no denied state to design.

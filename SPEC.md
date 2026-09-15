@@ -37,6 +37,65 @@ Every state gets its own URL, via a route plus a `?state=` override, e.g.
 `/recall?state=processing`. This is a build requirement, not a nicety: it is what makes the
 verification section below runnable without playing through the whole session by hand.
 
+### Figma index
+
+Read from the Main Flow section (`13615:12203`) on 2026-09-14. It holds 19 frames; this list has
+13 entries because several spec screens cover more than one frame. Six screens have no frame
+at all.
+
+| Spec screen | Figma frame | Node |
+|---|---|---|
+| 0. Device shell | — | none |
+| 1. First-run education | First-Run Education | `13610:10462` |
+| 2. Topic selection | Topic Selection / UnSelected | `13646:14741` |
+| | Topic Selection / Selected | `13645:14426` |
+| 3. Prompt (idle) | Term Prompt | `13610:10191` |
+| | Next Term Prompt | `13610:10242` |
+| | Hint / Prompt | `13610:10217` |
+| | Try again / Term Prompt | `13644:14133` |
+| 4. Recording, review, processing | Recording | `13610:10268` |
+| | Review Audio | `13610:10339` |
+| | Processing | `13612:11949` |
+| | Hint / Recording | `13610:10303` |
+| | Hint / Review Audio | `13610:10372` |
+| | Try again / Recording | `13644:14157` |
+| | Try again / Review Audio | `13644:14186` |
+| 5. Feedback: pass | Feedback Positive | `13610:10406` |
+| | Feedback Positive (hinted or retried) | `13610:10434` |
+| 6. Feedback: partial and fail | Feedback almost there | `13610:10477` |
+| | Feedback Negative | `13610:10505` |
+| 7. Didn't catch that | — | none |
+| 8. Reveal | — | none |
+| 9. Exit confirmation | — | none |
+| 10. Success screen | — | none |
+| 11. XP collection | — | none |
+| 12. Main screen | Main Screen | `13610:10167` |
+
+### Where Figma and the component library disagree
+
+Six things found reading the frames. None of them block a build; all of them will cause a
+builder to do the wrong thing if they trace the frames literally.
+
+1. **`Processing` has a node ID, `13612:11949`.** `knowledge/active-recall-user-flow.md` lists
+   Processing as having no frame. It does. That doc is wrong on this point.
+2. **The hint branch has its own Feedback Positive**, `13610:10434`, separate from the
+   first-attempt one. Two frames, one spec screen, different content.
+3. **`Progress Navigation` (the `RecallHeader` component) is on First-Run Education and Topic
+   Selection too**, not only the loop screens. Screen 1 and screen 2 below both need it.
+4. **No `Message Bubble` instances exist anywhere in the flow.** The bubbles are hand-built from
+   auto-named frames, including `Frame 2136139879`, which is the exact layer name
+   `knowledge/design-system.md` gives as an example of a layer that was never named. The Topic
+   Promo rows are local frames rather than instances of the published component, and the Continue
+   button on Feedback Positive is a local `Button` frame while First-Run Education and Topic
+   Selection use the real `button` instance. **Build from the components, not from these frames.**
+   The frames are the older hand-built version of what the library now provides.
+5. **`Navbar` means two different things.** On Main Screen it is 358×73, the app's bottom
+   navigation, which maps to `BottomNavbar`. On every loop frame it is 358×34, the iOS home
+   indicator, which in code is `env(safe-area-inset-bottom)` and not a component at all. This
+   confirms the loop is a genuine full-screen takeover: the app's bottom nav is absent from it.
+6. **Six spec screens have no frame**, listed as none above. Success and XP are the two that
+   `active-recall-user-flow.md` already flags as MUST HAVE with nothing drawn.
+
 ### 0. Device shell
 
 Build this before any screen. It is deliberately almost nothing, because it is where you find
@@ -58,7 +117,8 @@ smoke-test content.
 - `styles/tokens.css` is imported by `app/globals.css` and semantic tokens actually resolve.
 - 390px wide, dark mode, with `env(safe-area-inset-top)` and `env(safe-area-inset-bottom)`
   honoured under `viewport-fit=cover`. Content clears the status bar and the home indicator.
-- Inter Variable loads, is subset and preloaded, and nothing reflows on first paint.
+- The Greed webfont loads and text renders in it. Every typography token resolves through
+  `--font-family-greed` to `'Greed VF-TRIAL'`, and no `@font-face` for it exists yet.
 - Two components from the library sit next to each other without fighting over spacing.
 
 Delete the smoke-test content once screen 1 exists. Keep the shell.
@@ -69,45 +129,50 @@ Delete the smoke-test content once screen 1 exists. Keep the shell.
 
 **States:** one.
 
-**Components:** `StatusBar`, `Mascot` (`mood="standby"`, `size="L"`), `MessageBubble`
-(`variant="default"`), `Button` (`variant="Primary"`, `size="L"`).
+**Components:** `StatusBar`, `RecallHeader` (`progress={0}`, `xp={0}`), `Mascot`
+(`mood="standby"`, `size="L"`), `Button` (`variant="Primary"`, `size="L"`, "Got it").
 
-**Student can:** read and tap continue. Nothing else, no skip control. Shown once ever.
+**No `MessageBubble`.** The frame is a centred mascot with a headline ("What is Active Recall?")
+and a paragraph below it. No bubble, no tail. Headline and body are plain text on the token type
+scale.
 
-Not the mic primer. See screen 6.
+**Student can:** read and tap "Got it". Nothing else, no skip control. Shown once ever.
 
----
-
-### 2. Mic denied
-
-**States:** one.
-
-**Components:** `StatusBar`, `Mascot`, `MessageBubble`, two `Button`s: `variant="Primary"`
-for the Settings route and `variant="Secondary"` for the way out to Quiz or Flashcards.
-
-**Student can:** read what the mic is for and how to enable it in iOS Settings, or leave for
-another tool. No text fallback exists, by design, so this screen does not offer one.
+`RecallHeader` is on this frame in Figma. Progress has nothing to count yet, since the topic is
+not chosen, so it sits at `progress={0}` as it does on topic selection.
 
 ---
 
-### 3. Topic selection
+### 2. Topic selection
 
 **States:** two. Nothing selected, "Let's go!" `state="Disabled"`. One row selected,
 "Let's go!" `state="Default"`.
 
-**Components:** `StatusBar`, `RecallHeader` (`progress={0}`), `Mascot`, `MessageBubble`,
-a list of `TopicPromo` (`state="Selected" | "Unselected"`), `Button`.
+**Components:** `StatusBar`, `RecallHeader` (`progress={0}`), `Mascot` (`size="S"`, beside the
+bubble), `MessageBubble` (`showTail`), four `TopicPromo`
+(`state="Selected" | "Unselected"`), a "Show more" text link, `Button` ("Let's go!").
 
 **Student can:** pick exactly one topic, change the pick, tap "Let's go!". No free-text
 entry. `TopicPromo` renders as `role="radio"`, so the list needs a wrapper with
 `role="radiogroup"` and an accessible name.
 
 Progress sits at zero here because term count is not known until the topic is chosen. Every
-topic is startable, and all of them come from the same subject as the fully written one.
+topic is startable, and all of them come from the same subject as the fully written one:
+Ancient Greece is the written topic and the other rows are history topics. Figma draws four
+subjects (Geometry, English IELTS prep, Biology), which predates the one-subject decision.
+
+The row icon is a different accent colour per topic in Figma, but `TopicPromo` has no icon prop
+and its glyph is a raw vector group (`design-system.md`, Known gaps). The screen tints by row
+index using the `accent.*` pairs, leaving the component API untouched.
+
+The link reads **"Show more"** in Figma. `active-recall-user-flow.md` says "Load more"; Figma
+wins, it is the drawn artefact.
+
+**Next:** "Let's go!" goes straight to the term prompt. No primer, no permission step.
 
 ---
 
-### 4. Prompt (idle)
+### 3. Prompt (idle)
 
 **States:** one per cycle instance, differing only in content: first attempt, try again, and
 hint (which adds the hint text to the prompt).
@@ -120,7 +185,7 @@ exit confirmation. Skip lives here too and goes to the reveal.
 
 ---
 
-### 5. Recording, review audio, processing
+### 4. Recording, review audio, processing
 
 Three states of one screen, because the recording control is a single element that morphs in
 place rather than three separate controls. Build them together.
@@ -132,33 +197,26 @@ place rather than three separate controls. Build them together.
 delete (`size="S"`, `icon="Delete"`), send (`size="L"`, `icon="Send"`), resume
 (`size="S"`, `icon="Mic"`). Resume returns to recording and comes back with the longer clip.
 
-**Processing:** `ProcessingAnimation`, with `AudioPlayback` still present.
+**Processing:** `ProcessingAnimation`, plus `SentClip` — the student's answer, right-aligned as
+their side of the exchange. The prompt bubble is replaced by a holding line from Knowie.
 
 **Student can:** speak, stop, play back, delete and start over, resume onto the same take, or
 send. Send is never disabled. Nothing is submitted without an explicit tap.
 
 ---
 
-### 6. Mic primer
-
-**States:** one. Sits between topic commit and the first prompt, first session only.
-
-**Components:** `StatusBar`, `Mascot`, `MessageBubble`, `Button`.
-
-**Student can:** tap to trigger the OS permission dialog. Allow goes to screen 4, deny goes
-to screen 2.
-
-The first-run screen is two screens earlier and cannot prime this. A request that appears
-unannounced is the one that gets denied.
-
----
-
-### 7. Feedback: pass
+### 5. Feedback: pass
 
 **States:** one, with content differing for an unaided pass versus a hinted or retried one.
 
-**Components:** `StatusBar`, `RecallHeader`, `Mascot` (`mood="excited"`), `MessageBubble`
+**Components:** `StatusBar`, `RecallHeader`, `SentClip`, `Mascot`, `MessageBubble`
 (`variant="success"`, with `heading`), `Button`.
+
+`SentClip` carries over from processing: the answer stays on screen with the verdict so the
+student can play back what they said while reading how it was judged. Added to the Figma frames
+on 2026-09-14, and it applies to every feedback screen, not only the positive one.
+
+Note the mascot is `standby` in the frame, not `excited`.
 
 **Student can:** read what they got right, tap to continue. Always an explicit tap, never an
 auto-advance.
@@ -168,12 +226,15 @@ explain the topic.
 
 ---
 
-### 8. Feedback: partial and fail
+### 6. Feedback: partial and fail
 
 **States:** two. Partial and fail differ in copy, not in structure.
 
-**Components:** `StatusBar`, `RecallHeader`, `Mascot`, `MessageBubble` (`variant="almost"`
-with `heading`), two `Button`s: "See hint" and "Try again".
+**Components:** `StatusBar`, `RecallHeader`, `SentClip`, `Mascot`, `MessageBubble`
+(`variant="almost"` with `heading`), two `Button`s: "See hint" and "Try again".
+
+`SentClip` here too: the clip is on every feedback frame. It matters most on a miss, where being
+able to replay the answer is the nearest thing to recourse now that the transcript is cut.
 
 **Student can:** take the hint, or retry unaided. Both remain available: the ladder is
 attempt-count based, so picking "Try again" first does not forfeit the hint. Two attempts per
@@ -184,7 +245,7 @@ from a red treatment. Do not add one. See `knowledge/design-system.md`.
 
 ---
 
-### 9. Didn't catch that
+### 7. Didn't catch that
 
 **States:** one. Reached when a clip is under about a second.
 
@@ -192,11 +253,11 @@ from a red treatment. Do not add one. See `knowledge/design-system.md`.
 `CircularButton` (`size="L"`, `icon="Mic"`).
 
 **Student can:** record again. Does not count as an attempt, does not consume the hint, does
-not move the progress bar. Reached through the normal 2.5s processing wait, not instantly.
+not move the progress bar. Reached through the normal 5s processing wait, not instantly.
 
 ---
 
-### 10. Reveal
+### 8. Reveal
 
 **States:** one, reached from a second miss or from skip.
 
@@ -209,7 +270,7 @@ rather than appearing from nowhere.
 
 ---
 
-### 11. Exit confirmation
+### 9. Exit confirmation
 
 **States:** one.
 
@@ -224,7 +285,7 @@ sent it, so keeping or auto-sending it would act against their intent.
 
 ---
 
-### 12. Success screen
+### 10. Success screen
 
 **States:** three headline variants, one shared breakdown.
 
@@ -245,7 +306,7 @@ Requires per-term history, not just a final outcome per term.
 
 ---
 
-### 13. XP collection
+### 11. XP collection
 
 **States:** one, animating in.
 
@@ -257,7 +318,7 @@ earns, unaided earns more.
 
 ---
 
-### 14. Main screen
+### 12. Main screen
 
 Last, because it is the widest surface and the least load-bearing for the loop.
 
@@ -293,6 +354,11 @@ bank-and-stop point partway through a long session, a mid-loop "that's not what 
 retry, showing the XP cost of a hint, distinguishing skipped from revealed in the summary, and
 a chat-thread summary message after a completed session.
 
+**Mic permission, entirely** (decided 2026-09-14). No primer screen, no OS dialog to design
+around, no denied state. The prototype assumes access is already granted, since this is not the
+student's first time in the app. This is a testing prototype and permission was never the thing
+under test. Both screens are removed from the list above rather than marked as gaps.
+
 Out of scope for the platform, per `knowledge/platform-constraints.md`: anything above 390px,
 light mode, Android, native APIs.
 
@@ -312,11 +378,19 @@ Known gaps, accepted rather than solved:
 - **Verdicts are hard-coded per term and per attempt.** No speech-to-text, no judge. Every run
   is identical, which makes this a repeatable test instrument rather than a live-driven demo,
   and guarantees every designed state is reachable.
-- **Outcomes alternate** across the session so no stretch is all wins or all misses.
-- **Processing takes a fixed 2.5 seconds** on every turn, comfortably under the 4s target the
-  brief sets. The delay is real and the animation has to fill it.
-- **One topic is written in full:** every term, hint, per-verdict feedback line and reveal.
-  All other topics are startable and reuse that content, which is why every topic in the
+- **The scripted run is pass, pass, then a hinted term** (set 2026-09-14). Two wins before any
+  friction, so the payoff moment lands before the student is asked to struggle, and the summary
+  has a genuine shift to name at the end. Replaces the earlier "alternate throughout", which
+  produced no clean arc.
+- **The written topic has three terms, so a run is three prompts.** The product target stays 5
+  to 10 set by topic depth; the progress bar counts what exists rather than promising ten and
+  stopping short.
+- **Processing takes a fixed 5 seconds** on every turn, raised from 2.5s on 2026-09-14. This
+  is deliberately longer than the brief's <4s target, to test whether the wait holds attention
+  at a realistic bad-day latency. The delay is real and the animation has to fill it. If
+  testers abandon here, that is the finding and the number comes down.
+- **One topic is written in full:** three terms, each with its hint, per-verdict feedback and
+  reveal. All other topics are startable and reuse that content, which is why every topic in the
   recents list comes from the same subject.
 - **Empty clips override the script.** Under about a second returns "didn't catch that" rather
   than the scripted verdict. The one legitimate override.
@@ -340,7 +414,7 @@ All commands run from `knowunity-app/`.
 | A2 | `npm run lint` | Exit 0. |
 | A3 | `npm run build` | Exit 0, no type errors. |
 | A4 | Storybook `test-run` across `stories/` (the MCP tool, not a package.json script) | All stories pass, including `components-button-circular--touch-target-holds-the-minimum`, `components-button--touch-target-holds-the-minimum`, `components-topicpromo--selected-is-announced`, `components-button-circular--icon-only-button-is-named`. |
-| A5 | `grep -rnE '#[0-9a-fA-F]{3,8}' components/ app/ --include='*.css' --include='*.tsx'` | No matches. `styles/tokens.css` is deliberately outside the search: it is the only file allowed to hold raw values. |
+| A5 | `grep -rnE '#[0-9a-fA-F]{3,8}' components/ app/ --include='*.css' --include='*.tsx'` | One match only: `themeColor` in `app/layout.tsx`. A `<meta>` tag cannot read a CSS custom property, so that colour cannot come from a token; it is commented as such and must track `--background-page`. `styles/tokens.css` is outside the search, being the one file allowed raw values. Pre-existing matches in `components/icons/` and `components/ProcessingAnimation/` are known: the icons hardcode SVG fills, and the animation uses primitives because no semantic token covers a recording pulse (`design-system.md`). |
 | A6 | `grep -rn 'var(--[^)]*,' components/ app/` | No matches. CSS fallback values are banned by `knowledge/design-system.md`. |
 | A7 | `grep -rln 'prefers-reduced-motion' components/RecordingTimer components/ProcessingAnimation` | Both files listed. Motion-carried status has a reduced variant. |
 | A8 | `grep -rn "from 'knowunity-app'" app/ components/` | No matches. That import path does not resolve; use the `@/*` alias. |
@@ -356,63 +430,62 @@ and a human can drive it by hand. Every row is pass or fail, with nothing to int
 |---|---|---|
 | B1 | Load the main screen with no prior sessions | Speak to Learn renders as the focal card, not as a `TopicChip` |
 | B2 | Open the Tools overlay, tap Active Recall | First-run education screen renders |
-| B3 | Tap continue, then return to the main screen and start again | Education screen does *not* render a second time |
+| B3 | Tap "Got it", then return to the main screen and start again | Education screen does *not* render a second time |
 | B4 | Load the main screen after N impressions of the focal card | Speak to Learn renders as a `TopicChip` with `type="activeRecall"` |
 | B5 | On topic selection with nothing picked | "Let's go!" has `state="Disabled"` and does not respond to a tap |
 | B6 | Tap one topic, then tap a second topic | Exactly one row has `state="Selected"` |
-| B7 | Tap "Let's go!" | Mic primer renders before any term prompt |
-| B8 | Deny the permission | Mic denied screen renders, with a Settings route and a working exit to another tool |
-| B9 | Allow the permission | Term 1 prompt renders, `RecallHeader` progress at 0 |
+| B7 | Check the four rows | Four different accent icon colours, and all row labels are history topics |
+| B8 | Tap "Let's go!" | Term 1 prompt renders directly, `RecallHeader` progress at 0. No primer and no permission step in between |
 
 **One term, every control**
 
 | # | Do | Assert |
 |---|---|---|
-| B10 | Tap the mic | `RecordingTimer` has `isRecording`, elapsed time increments from 0:00 |
-| B11 | Stop | `AudioPlayback` renders with three `CircularButton`s: `icon="Delete"` at `size="S"`, `icon="Send"` at `size="L"`, `icon="Mic"` at `size="S"` |
-| B12 | Tap play | `AudioPlayback` has `isPlaying` |
-| B13 | Tap delete | Returns to the prompt with no clip held |
-| B14 | Record, stop, tap resume, stop again | Returns to review with a longer clip, not a new one |
-| B15 | Wait 30 seconds on the review state without tapping | Nothing is submitted |
-| B16 | Tap send, and time it | `ProcessingAnimation` renders for 2.4 to 2.6 seconds, then a feedback screen. No spinner at any point |
+| B9 | Tap the mic | `RecordingTimer` has `isRecording`, elapsed time increments from 0:00 |
+| B10 | Stop | `AudioPlayback` renders with three `CircularButton`s: `icon="Delete"` at `size="S"`, `icon="Send"` at `size="L"`, `icon="Mic"` at `size="S"` |
+| B11 | Tap play | `AudioPlayback` has `isPlaying` |
+| B12 | Tap delete | Returns to the prompt with no clip held |
+| B13 | Record, stop, tap resume, stop again | Returns to review with a longer clip, not a new one |
+| B14 | Wait 30 seconds on the review state without tapping | Nothing is submitted |
+| B15 | Tap send, and time it | `ProcessingAnimation` renders for 4.9 to 5.2 seconds, then a feedback screen. No spinner at any point |
 
 **The verdict ladder**
 
 | # | Do | Assert |
 |---|---|---|
-| B17 | Reach a pass | `MessageBubble` has `variant="success"` and a `heading`; `Mascot` has `mood="excited"`; advance requires a tap |
-| B18 | Wait 10 seconds on any feedback screen | It has not auto-advanced |
-| B19 | Reach a partial | `MessageBubble` has `variant="almost"`; both "See hint" and "Try again" render |
-| B20 | Reach a fail | Same two options render; no red error treatment and no `variant` other than `almost` |
-| B21 | On a partial, tap "Try again", then miss again | "See hint" still renders. The hint was not forfeited |
-| B22 | Miss twice with the hint used | Reveal renders, with the saved-for-review confirmation |
-| B23 | Count recordings on one term | Never exceeds three |
-| B24 | Tap skip on a fresh prompt | Reveal renders. No blank pass |
-| B25 | Record under one second and send | "Didn't catch that" renders after the full 2.5s wait, the attempt counter is unchanged, the hint is still available, and `RecallHeader` progress is unchanged |
-| B26 | Compare `RecallHeader` progress before and after a retry, a hint and a didn't-catch-that | Identical in all three cases |
-| B27 | Resolve a term | Progress increases by exactly `1/N` |
+| B16 | Reach a pass | `MessageBubble` has `variant="success"` and a `heading`; `Mascot` has `mood="excited"`; advance requires a tap |
+| B17 | Wait 10 seconds on any feedback screen | It has not auto-advanced |
+| B18 | Reach a partial | `MessageBubble` has `variant="almost"`; both "See hint" and "Try again" render |
+| B19 | Reach a fail | Same two options render; no red error treatment and no `variant` other than `almost` |
+| B20 | On a partial, tap "Try again", then miss again | "See hint" still renders. The hint was not forfeited |
+| B21 | Miss twice with the hint used | Reveal renders, with the saved-for-review confirmation |
+| B22 | Count recordings on one term | Never exceeds three |
+| B23 | Tap skip on a fresh prompt | Reveal renders. No blank pass |
+| B24 | Record under one second and send | "Didn't catch that" renders after the full 5s wait, the attempt counter is unchanged, the hint is still available, and `RecallHeader` progress is unchanged |
+| B25 | Compare `RecallHeader` progress before and after a retry, a hint and a didn't-catch-that | Identical in all three cases |
+| B26 | Resolve a term | Progress increases by exactly `1/N` |
 
 **Interruption**
 
 | # | Do | Assert |
 |---|---|---|
-| B28 | Tap `onClose` mid-term | Exit confirmation renders and its copy states that progress saves |
-| B29 | Confirm the exit, then return via Active Recall | Same term, same attempt count, hint still unlocked if it was unlocked, same feedback if that is where they were |
-| B30 | Exit from the review-audio state, then return | No clip is restored, and no verdict was recorded. Nothing was auto-sent |
-| B31 | Return to the main screen with a session unfinished | Knowie's resume offer renders in the thread |
-| B32 | Finish a session and return to the main screen | The thread is unchanged. No summary message |
+| B27 | Tap `onClose` mid-term | Exit confirmation renders and its copy states that progress saves |
+| B28 | Confirm the exit, then return via Active Recall | Same term, same attempt count, hint still unlocked if it was unlocked, same feedback if that is where they were |
+| B29 | Exit from the review-audio state, then return | No clip is restored, and no verdict was recorded. Nothing was auto-sent |
+| B30 | Return to the main screen with a session unfinished | Knowie's resume offer renders in the thread |
+| B31 | Finish a session and return to the main screen | The thread is unchanged. No summary message |
 
 **Summary, all three variants**
 
 | # | Do | Assert |
 |---|---|---|
-| B33 | Force a run where every term passes unaided first try | Clean-run headline renders |
-| B34 | Force a mixed run | Headline names the terms that moved from missed to explained |
-| B35 | Force a run with nothing unaided | Attempt-claiming headline renders, and it makes no mastery claim |
-| B36 | On any completed run, compare the breakdown against a hand-tally of the session | X unaided, Y hinted, Z revealed match. Skipped terms are inside the revealed count, not their own category |
-| B37 | Open the review list | Contains exactly the hinted, revealed and skipped terms. Zero unaided terms |
-| B38 | Tap "Try again" | Only the terms that needed help are replayed |
-| B39 | Reach XP collection | Total equals base-per-term plus the unaided bonus. No term is penalised for a hint |
+| B32 | Force a run where every term passes unaided first try | Clean-run headline renders |
+| B33 | Force a mixed run | Headline names the terms that moved from missed to explained |
+| B34 | Force a run with nothing unaided | Attempt-claiming headline renders, and it makes no mastery claim |
+| B35 | On any completed run, compare the breakdown against a hand-tally of the session | X unaided, Y hinted, Z revealed match. Skipped terms are inside the revealed count, not their own category |
+| B36 | Open the review list | Contains exactly the hinted, revealed and skipped terms. Zero unaided terms |
+| B37 | Tap "Try again" | Only the terms that needed help are replayed |
+| B38 | Reach XP collection | Total equals base-per-term plus the unaided bonus. No term is penalised for a hint |
 
 ### Part C: needs a human and a device
 
@@ -433,17 +506,16 @@ Not automatable, and saying so is the point.
 
 ## Open
 
-Undecided, listed rather than assumed:
+Undecided, listed rather than assumed.
+
+Two items closed on 2026-09-14: the written topic is **Ancient Greece** with the other rows as
+history topics, and the microphone is **fully mocked**, since real `getUserMedia` capture would
+raise a browser permission prompt and permission is now out of scope.
 
 - **All copy.** Every term, hint, per-verdict feedback line and reveal for the written topic.
   Including the three Success headlines, where the nothing-unaided variant is the easiest place
   in the flow to sound like spin.
-- **Which subject** the fully written topic belongs to, and therefore what the other rows in
-  the recents list are called.
 - **How many terms** the written topic actually has, within the 5 to 10 range.
-- **Real mic capture or fully mocked.** `getUserMedia` gets a genuine permission prompt to
-  design against; mocking is faster. `knowledge/platform-constraints.md` says decide early and
-  do not burn a day on it. Still open.
 - **The term count in the header.** The decision is a bar plus a count ("4 of 10"), but
   `RecallHeader` only takes `progress` as a 0-1 fraction and has no count or label prop.
   Either add a prop or render the count outside the component. Do not fake it.

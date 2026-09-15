@@ -61,9 +61,11 @@ Progress counts terms only, not attempts: a continuous bar plus "4 of 10". Retri
 
 Empty or near-silent recordings are a fourth outcome, not a scripted verdict. A clip under about a second goes through the normal processing wait and returns a gentle "didn't catch that" that does not count as an attempt. Send is never disabled, because push-to-talk promises the student controls send. This is the one place the mock legitimately overrides the script.
 
-Mic denial is explained, not worked around: what the mic is for, how to enable it in Settings, and a clear route out to Quiz or Flashcards. No text fallback exists by design, so this screen does not pretend the feature can work without a mic. Most students who deny will not come back from Settings; the leverage is in the primer that precedes the request.
+~~Mic denial is explained, not worked around: what the mic is for, how to enable it in Settings, and a clear route out to Quiz or Flashcards.~~ **Cut from MVP 2026-09-14, moved to future iterations.** Mic permission is out of scope entirely.
 
-The mic permission request gets its own short in-context primer after topic commit, one line on why the mic is needed and a button that triggers the OS dialog. The first-run education screen is two screens earlier and cannot do this job. Context-triggered requests are denied far less often than ones that appear unannounced.
+~~The mic permission request gets its own short in-context primer after topic commit, one line on why the mic is needed and a button that triggers the OS dialog.~~ **Cut from MVP 2026-09-14, moved to future iterations.**
+
+Mic access is assumed granted, because this is not the student's first time in the app. The prototype exists to test the recall loop, and permission was never the thing under test. No primer screen, no OS dialog, no denied state. Consequence: the microphone is fully mocked, since real `getUserMedia` capture would raise a browser permission prompt and reintroduce exactly what this removes.
 
 First-run education is shown once, with short text and a single CTA. No skip control, because with text this short there is nothing to skip and no reason to distinguish reading from skipping.
 
@@ -75,9 +77,9 @@ Decided 2026-09-14. These are build instructions, not product decisions.
 
 **Verdicts are hard-coded per term.** No STT, no judge, so the outcome of every term is written in advance. Every run is identical, which makes the prototype a repeatable test instrument rather than a live-driven demo, and guarantees every designed state is reachable. Each term needs its retry outcome scripted too, not just its first attempt.
 
-**The scripted sequence alternates.** Outcomes are mixed across the session so no stretch is all wins or all misses. Closest to a real session and it tests whether the loop holds up under variety. Accepted cost: no clean arc, so the "what changed" claim on the demo run is muddier than a front-loaded script would make it.
+**The scripted sequence is pass, pass, then a hinted term** (changed 2026-09-14 from alternating). Three prompts, and the third comes back partial so the student meets the hint ladder and recovers. Two wins land the payoff moment before any friction, and the run ends with a real shift for the summary to name: two unaided, one recovered after a hint. The earlier alternating script gave no clean arc, which made the "what changed" claim muddier than it needed to be.
 
-**Processing takes a fixed 2.5 seconds** on every turn, comfortably under the 4s target. Predictable, and the animation has time to read. Known gap: the prototype never shows what a slow turn looks like, so the "taking a moment" state is not reachable.
+**Processing takes a fixed 5 seconds** on every turn (raised from 2.5s on 2026-09-14). Predictable, and the animation has room to read. Note this is deliberately *above* the brief's <4s target rather than inside it: the point is to see whether the wait state holds attention at a realistic bad-day latency, since a wait that is comfortable by construction proves nothing. If testers abandon during processing, that is the finding, and the number comes down. Known gap either way: there is still no separate "taking a moment" state for a turn that runs long.
 
 **One topic is written in full.** All its terms, hints, per-verdict feedback and reveals are hand-written. The other topics in the list are all startable but reuse the built topic's content. To keep the reuse plausible, every topic in the recents list comes from the same subject as the deep one, so a reused term reads as adjacent rather than wrong. A tester who knows the subject will still spot it: known, accepted.
 
@@ -87,6 +89,6 @@ Decided 2026-09-14. These are build instructions, not product decisions.
 
 Second hint (cut for loop momentum), mid-loop material review (breaks completion), visible transcript during recording (prevents desired voice-only behavior), type-instead fallback (feature requires voice, other tools exist for text-based needs).
 
-**Moved to future iterations** (cut 2026-09-14, previously committed decisions): "Show transcript" after sending, the Understanding Check after a reveal, and the Exam Prep entry point. Reasons above.
+**Moved to future iterations** (cut 2026-09-14, previously committed decisions): "Show transcript" after sending, the Understanding Check after a reveal, the Exam Prep entry point, and the whole mic permission flow (primer, OS dialog, denied state). Reasons above.
 
 **Considered and not taken** (2026-09-14, recorded so they are not re-litigated): a bank-and-stop point partway through a long session, a mid-loop "that's not what I said" retry, showing the XP cost of a hint, distinguishing skipped from revealed in the summary, and a chat-thread summary message after a completed session.
