@@ -1,0 +1,86 @@
+.root {
+  display: flex;
+  align-items: center;
+  gap: var(--space-300);
+  padding-inline: var(--space-400);
+  block-size: 56px;
+}
+
+/* ── Close button ─────────────────────────────────────────────────────────── */
+
+.closeBtn {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--touch-target-minimum);
+  block-size: var(--touch-target-minimum);
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: var(--radius-full);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.closeBtn:focus-visible {
+  outline: var(--stroke-heavy-border) solid var(--border-focus);
+}
+
+/* ── Progress track ───────────────────────────────────────────────────────── */
+
+.track {
+  flex: 1;
+  position: relative;
+  block-size: 8px;
+  background-color: var(--background-surface);
+  border-radius: var(--radius-full);
+  overflow: visible;
+}
+
+.fill {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  background-color: var(--accent-brand-bold);
+  border-radius: var(--radius-full);
+  min-inline-size: 8px;
+  transition: width 300ms ease;
+}
+
+/* Leading dot: shows where the progress head is */
+.dot {
+  position: absolute;
+  inset-block-start: 50%;
+  transform: translateY(-50%);
+  inline-size: 14px;
+  block-size: 14px;
+  border-radius: var(--radius-full);
+  background-color: var(--accent-brand-bold);
+  transition: left 300ms ease;
+}
+
+/* ── XP counter ───────────────────────────────────────────────────────────── */
+
+.xp {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-050);
+}
+
+.lightning {
+  inline-size: var(--icon-200);
+  block-size: var(--icon-200);
+  color: var(--accent-blue-bold);
+}
+
+.xpValue {
+  font-family: var(--typography-body-s-bold-family);
+  font-size: var(--typography-body-s-bold-size);
+  font-weight: var(--typography-body-s-bold-weight);
+  line-height: var(--typography-body-s-bold-line-height);
+  color: var(--accent-blue-bold);
+}

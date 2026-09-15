@@ -1,0 +1,66 @@
+.root {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  max-inline-size: 100%;
+}
+
+/* ── Tail ─────────────────────────────────────────────────────────────────── */
+
+.tail {
+  flex: none;
+  inline-size: 12px;
+  block-size: 20px;
+  background-color: var(--background-surface);
+  clip-path: polygon(100% 0%, 100% 100%, 0% 50%);
+  margin-block-start: 12px;
+}
+
+/* ── Content bubble ───────────────────────────────────────────────────────── */
+
+.content {
+  flex: 1;
+  background-color: var(--background-surface);
+  border-radius: var(--radius-400);
+  padding: var(--space-400);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-200);
+}
+
+/* ── Heading ──────────────────────────────────────────────────────────────── */
+
+.heading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-200);
+  font-family: var(--typography-body-m-bold-family);
+  font-size: var(--typography-body-m-bold-size);
+  font-weight: var(--typography-body-m-bold-weight);
+  line-height: var(--typography-body-m-bold-line-height);
+  color: var(--text-primary);
+}
+
+.heading_success {
+  color: var(--feedback-success-bold);
+}
+
+.heading_almost {
+  color: var(--text-primary);
+}
+
+.checkIcon {
+  display: inline-flex;
+  flex: none;
+}
+
+/* ── Message ──────────────────────────────────────────────────────────────── */
+
+.message {
+  margin: 0;
+  font-family: var(--typography-body-m-regular-family);
+  font-size: var(--typography-body-m-regular-size);
+  font-weight: var(--typography-body-m-regular-weight);
+  line-height: var(--typography-body-m-regular-line-height);
+  color: var(--text-primary);
+}

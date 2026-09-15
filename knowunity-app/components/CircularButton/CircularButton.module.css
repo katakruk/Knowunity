@@ -1,0 +1,107 @@
+/**
+ * Button Circular — Figma component set 13620:12284
+ *
+ * Every value resolves to a variable from styles/tokens.css.
+ *
+ * Colours follow Figma: the primary ladder, a near-white circle with a dark
+ * glyph. The "Button / Circular" section of design-system.md documents the
+ * secondary ladder instead, a translucent white circle with a light glyph,
+ * which is a different-looking component rather than a small drift. Figma wins
+ * here because this set is newer than that doc section; the doc needs updating
+ * at lines 264-267. See the story "Compared with design-system.md".
+ *
+ * One thing not taken from Figma: it pairs its primary background with an
+ * accent/brand/onBold glyph. That skips the matching "on" token, which
+ * design-system.md forbids, so the glyph uses interactive.onPrimary. The two
+ * values are a shade apart and the pairing is a mistake either way.
+ */
+
+.root {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: var(--space-0);
+  border: none;
+  border-radius: var(--radius-full);
+  background-color: var(--interactive-primary);
+  color: var(--interactive-on-primary);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 120ms ease;
+}
+
+.root:focus-visible {
+  outline: var(--stroke-heavy-border) solid var(--border-focus);
+  outline-offset: var(--space-050);
+}
+
+.icon {
+  display: block;
+  flex: none;
+}
+
+/* ── Size ────────────────────────────────────────────────────────────────────
+   Both diameters already clear the 48px minimum touch target from
+   platform-constraints.md (S is exactly it), so unlike the pill Button this
+   component is its own hit area and needs no wrapper. */
+
+.sizeS {
+  inline-size: var(--control-circular-s);
+  block-size: var(--control-circular-s);
+}
+
+.sizeL {
+  inline-size: var(--control-circular-l);
+  block-size: var(--control-circular-l);
+}
+
+.sizeS .icon {
+  inline-size: var(--icon-450);
+  block-size: var(--icon-450);
+}
+
+.sizeL .icon {
+  inline-size: var(--icon-600);
+  block-size: var(--icon-600);
+}
+
+/* ── Hover ───────────────────────────────────────────────────────────────────
+   The circular section of design-system.md lists only Default and Pressed, but
+   the token exists and the general button ladder documents hover. Gated behind
+   a real pointer so a tap on the build target cannot leave it stuck on. */
+
+@media (hover: hover) {
+  .root:hover {
+    background-color: var(--interactive-primary-hover);
+  }
+}
+
+/* ── State=Pressed ───────────────────────────────────────────────────────────
+   :active so a real touch shows it, [data-pressed] so the Pressed stories can
+   hold it open. */
+
+.root:active,
+.root[data-pressed] {
+  background-color: var(--interactive-primary-active);
+}
+
+/* ── The design-system.md binding, for comparison only ───────────────────────
+   Not part of the component's API. The comparison story applies this class so
+   both readings can be seen together. Delete it once the doc is updated. */
+
+.docBinding {
+  background-color: var(--interactive-secondary);
+  color: var(--interactive-on-secondary);
+}
+
+.docBinding:active,
+.docBinding[data-pressed] {
+  background-color: var(--interactive-secondary-active);
+}
+
+@media (hover: hover) {
+  .docBinding:hover {
+    background-color: var(--interactive-secondary-hover);
+  }
+}

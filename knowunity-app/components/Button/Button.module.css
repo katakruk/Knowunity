@@ -1,0 +1,234 @@
+/**
+ * button — Figma component set 9003:6667
+ *
+ * Every value in this file resolves to a variable from styles/tokens.css.
+ * No raw hex, no raw pixel numbers. Colours follow design-system.md, which the
+ * design owner named as the source of truth where it disagreed with Figma's
+ * bindings (Pressed, Disabled and Loading all differed).
+ */
+
+/* ── Hit area ────────────────────────────────────────────────────────────────
+   The <button> itself is only the touch target. platform-constraints.md makes
+   48px the floor, so the visual pill (32/40/56px) is a child rather than the
+   button box, otherwise the S and M pills would stretch to meet the minimum. */
+
+.touchTarget {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-inline-size: var(--touch-target-minimum);
+  min-block-size: var(--touch-target-minimum);
+  padding: var(--space-0);
+  border: none;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.touchTarget:disabled {
+  cursor: not-allowed;
+}
+
+/* ── Visual pill ─────────────────────────────────────────────────────────── */
+
+.pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border-radius: var(--radius-full);
+  transition: background-color 120ms ease, color 120ms ease;
+}
+
+.touchTarget:focus-visible .pill {
+  outline: var(--stroke-heavy-border) solid var(--border-focus);
+  outline-offset: var(--space-050);
+}
+
+.label {
+  white-space: nowrap;
+}
+
+/* Loading hides the label the way the Figma Loading variants do, but keeps it
+   in the accessibility tree so the button never loses its name. Absolute
+   positioning takes it out of flow so the pill shrinks to the spinner. */
+.labelHidden {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.icon {
+  display: block;
+  flex: none;
+}
+
+.spinner {
+  animation: buttonSpinnerSpin 800ms steps(8, end) infinite;
+}
+
+@keyframes buttonSpinnerSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation-duration: 2400ms;
+    animation-timing-function: linear;
+  }
+}
+
+/* ── size ────────────────────────────────────────────────────────────────── */
+
+.sizeS .pill {
+  block-size: var(--control-height-s);
+  padding-inline: var(--space-300);
+  gap: var(--space-150);
+}
+
+.sizeM .pill {
+  block-size: var(--control-height-m);
+  padding-inline: var(--space-400);
+  gap: var(--space-150);
+}
+
+.sizeL .pill {
+  block-size: var(--control-height-l);
+  padding-inline: var(--space-600);
+  gap: var(--space-200);
+}
+
+.sizeS .icon {
+  inline-size: var(--icon-200);
+  block-size: var(--icon-200);
+}
+
+.sizeM .icon {
+  inline-size: var(--icon-250);
+  block-size: var(--icon-250);
+}
+
+.sizeL .icon {
+  inline-size: var(--icon-300);
+  block-size: var(--icon-300);
+}
+
+.sizeS .label,
+.sizeM .label {
+  font-family: var(--typography-body-s-bold-family);
+  font-size: var(--typography-body-s-bold-size);
+  font-weight: var(--typography-body-s-bold-weight);
+  line-height: var(--typography-body-s-bold-line-height);
+  letter-spacing: var(--typography-body-s-bold-letter-spacing);
+}
+
+.sizeL .label {
+  font-family: var(--typography-headline-s-family);
+  font-size: var(--typography-headline-s-size);
+  font-weight: var(--typography-headline-s-weight);
+  line-height: var(--typography-headline-s-line-height);
+  letter-spacing: var(--typography-headline-s-letter-spacing);
+}
+
+/* ── variant, state=Default ──────────────────────────────────────────────── */
+
+.variantPrimary .pill {
+  background-color: var(--interactive-primary);
+  color: var(--interactive-on-primary);
+}
+
+.variantSecondary .pill {
+  background-color: var(--interactive-secondary);
+  color: var(--interactive-on-secondary);
+}
+
+/* Tertiary is a bare text action: no fill, no horizontal padding, and it hugs
+   its content at S and M exactly as the Figma variants do. */
+.variantTertiary .pill {
+  background-color: transparent;
+  color: var(--text-primary);
+}
+
+.variantTertiary.sizeS .pill,
+.variantTertiary.sizeM .pill,
+.variantTertiary.sizeL .pill {
+  padding-inline: var(--space-0);
+}
+
+.variantTertiary.sizeS .pill,
+.variantTertiary.sizeM .pill {
+  block-size: auto;
+}
+
+/* ── Hover ───────────────────────────────────────────────────────────────────
+   design-system.md documents default → hover → active. The build target is
+   touch only, so hover is gated behind a real pointer to avoid a hover state
+   sticking after a tap. There is no tertiary hover token, so tertiary has none. */
+
+@media (hover: hover) {
+  .variantPrimary:hover:not(:disabled) .pill {
+    background-color: var(--interactive-primary-hover);
+  }
+
+  .variantSecondary:hover:not(:disabled) .pill {
+    background-color: var(--interactive-secondary-hover);
+  }
+}
+
+/* ── state=Pressed ───────────────────────────────────────────────────────────
+   Driven by :active so a real touch shows it, and by [data-pressed] so the
+   Pressed stories can hold it open. Figma's cssMapping says the same thing. */
+
+.variantPrimary:active:not(:disabled) .pill,
+.variantPrimary[data-pressed] .pill {
+  background-color: var(--interactive-primary-active);
+}
+
+.variantSecondary:active:not(:disabled) .pill,
+.variantSecondary[data-pressed] .pill {
+  background-color: var(--interactive-secondary-active);
+}
+
+/* Tertiary has no pressed fill in the token set. design-system.md names
+   interactive.overlay.pressed as the touch-feedback layer for dark surfaces,
+   so tertiary borrows that rather than inventing an interactive.tertiary. */
+.variantTertiary:active:not(:disabled) .pill,
+.variantTertiary[data-pressed] .pill {
+  background-color: var(--interactive-overlay-pressed);
+}
+
+/* ── state=Disabled ──────────────────────────────────────────────────────────
+   Guarded against aria-busy so Loading is not also painted as disabled, since
+   Loading sets the disabled attribute to block input. */
+
+.touchTarget:disabled:not([aria-busy='true']) .pill {
+  background-color: var(--interactive-disabled);
+  color: var(--text-disabled);
+}
+
+.variantTertiary:disabled:not([aria-busy='true']) .pill {
+  background-color: transparent;
+  color: var(--text-disabled);
+}
+
+/* ── state=Loading ───────────────────────────────────────────────────────── */
+
+.variantPrimary[aria-busy='true'] .pill {
+  background-color: var(--interactive-primary-loading);
+  color: var(--interactive-on-primary);
+}
+
+.variantSecondary[aria-busy='true'] .pill {
+  background-color: var(--interactive-secondary-loading);
+  color: var(--interactive-on-secondary);
+}
+
+.variantTertiary[aria-busy='true'] .pill {
+  background-color: transparent;
+  color: var(--text-link);
+}

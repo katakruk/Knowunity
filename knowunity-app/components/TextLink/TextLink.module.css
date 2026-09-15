@@ -1,0 +1,40 @@
+/* A bare text action: no pill, no fill, just a tappable label.
+ *
+ * Used for "Show more" on topic selection and "Skip this question" in the recall
+ * loop. Not `Button variant="Tertiary"`, which still draws a pill and a press
+ * fill. */
+
+.root {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* platform-constraints.md puts the floor at 44px and there is no hover on
+   * mobile, so the target has to be real even though the label is small. */
+  min-block-size: var(--touch-target-minimum);
+  padding-inline: var(--space-200);
+  border: none;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+
+  color: var(--text-primary);
+  font-family: var(--typography-body-s-bold-family);
+  font-size: var(--typography-body-s-bold-size);
+  font-weight: var(--typography-body-s-bold-weight);
+  line-height: var(--typography-body-s-bold-line-height);
+  letter-spacing: var(--typography-body-s-bold-letter-spacing);
+}
+
+.root:active {
+  color: var(--text-secondary);
+}
+
+.root:disabled {
+  color: var(--text-disabled);
+  cursor: not-allowed;
+}
+
+.alignEnd {
+  align-self: flex-end;
+}

@@ -1,0 +1,19 @@
+/* Feedback Positive. Figma 13610:10406 (unaided), 13610:10434 (hinted or retried). */
+
+.root {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  /* Same rhythm as the processing exchange, so the clip does not appear to jump
+   * when the verdict replaces the holding line. */
+  gap: var(--space-400);
+  padding-block-start: var(--space-400);
+}
+
+/* Knowie's verdict: small mascot beside a tailed bubble, top of the screen. The
+ * rest of the screen stays empty so the affirmation is the only thing on it. */
+.prompt {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-200);
+}

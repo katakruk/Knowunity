@@ -1,0 +1,45 @@
+@import "tailwindcss";
+@import "../styles/tokens.css";
+@import "./fonts.css";
+
+/* Dark mode only. The design system has one mode, so there is no
+ * prefers-color-scheme branch here on purpose. See
+ * ../../knowunity-sprint/knowledge/platform-constraints.md */
+
+html {
+  block-size: 100%;
+}
+
+body {
+  min-block-size: 100%;
+  margin: 0;
+  background-color: var(--background-page);
+  color: var(--text-primary);
+
+  font-family: var(--typography-body-m-regular-family);
+  font-size: var(--typography-body-m-regular-size);
+  font-weight: var(--typography-body-m-regular-weight);
+  line-height: var(--typography-body-m-regular-line-height);
+  letter-spacing: var(--typography-body-m-regular-letter-spacing);
+
+  /* Greed's width axis defaults to 75 (Condensed). Pin it to Standard, which is
+   * the width the Figma frames use. Without this every screen renders
+   * condensed. See fonts.css. */
+  font-stretch: 100%;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* The recall loop leans on motion to carry system status, so motion is reduced
+ * rather than removed. Per-component handling lives in the components; this is
+ * the blanket guard for anything decorative. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

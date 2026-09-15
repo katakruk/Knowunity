@@ -1,0 +1,47 @@
+/* The device shell. Everything a screen needs from the canvas and nothing else. */
+
+.viewport {
+  /* Centres the 390px phone on a wider window without affecting the phone
+   * itself. On a real phone this is a no-op. */
+  display: flex;
+  justify-content: center;
+  min-block-size: 100dvb;
+  background-color: var(--background-page);
+}
+
+.root {
+  display: flex;
+  flex-direction: column;
+  inline-size: 100%;
+  /* 390px is the target canvas. Narrower devices (iPhone SE at 320) shrink
+   * rather than scroll sideways. */
+  max-inline-size: 390px;
+  min-block-size: 100dvb;
+  background-color: var(--background-page);
+
+  /* Safe areas. These resolve to 0 unless the viewport is set to
+   * viewport-fit=cover, which app/layout.tsx does. */
+  padding-block-start: env(safe-area-inset-top);
+  padding-block-end: env(safe-area-inset-bottom);
+}
+
+/* Chrome that runs edge to edge: StatusBar, RecallHeader. No side padding. */
+.chrome {
+  flex: none;
+}
+
+/* Screen content. Owns the 16px screen margins from platform-constraints.md. */
+.content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-block-size: 0;
+  padding-inline: var(--space-400);
+}
+
+/* The thumb-zone strip. Primary actions sit here, not at the top. */
+.footer {
+  flex: none;
+  padding-inline: var(--space-400);
+  padding-block-end: var(--space-400);
+}

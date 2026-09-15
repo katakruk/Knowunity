@@ -1,0 +1,75 @@
+/* Recording, Review Audio and Processing. Figma 13610:10268, 13610:10339,
+ * 13612:11949.
+ *
+ * One screen, three states. The primary control keeps its position across all of
+ * them so the student's thumb never has to move and their eye never loses it:
+ * Pause becomes Send becomes nothing, in place. */
+
+.root {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-200);
+  padding-block-start: var(--space-400);
+}
+
+/* Knowie's prompt, carried over from the term prompt unchanged during recording
+ * and review. Processing replaces it, see .exchange. */
+.prompt {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-200);
+}
+
+.promptBubble p {
+  white-space: pre-line;
+}
+
+/* ── Processing ──────────────────────────────────────────────────────────────
+   The frame drops the prompt and shows the turn as an exchange instead: the
+   student's clip right-aligned as the thing they just sent, Knowie's holding
+   line below it. */
+
+.exchange {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-400);
+}
+
+/* ── Middle ─────────────────────────────────────────────────────────────────
+   Whatever carries system status for the current state: the ripple timer while
+   recording, the orbiting particles while processing. */
+
+.status {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: 0;
+}
+
+/* The playback bar in review sits low, just above the controls. */
+.playback {
+  padding-block-end: var(--space-400);
+}
+
+/* ── Controls ────────────────────────────────────────────────────────────────
+   Three slots so the large primary control stays dead centre whether it is
+   flanked by one button or two. */
+
+.controls {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  justify-items: center;
+  gap: var(--space-400);
+  padding-block-end: var(--space-800);
+}
+
+.slotStart {
+  justify-self: end;
+}
+
+.slotEnd {
+  justify-self: start;
+}

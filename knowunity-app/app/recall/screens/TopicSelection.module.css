@@ -1,0 +1,55 @@
+/* Topic Selection. Figma 13646:14741 (unselected), 13645:14426 (selected). */
+
+.root {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-600);
+  padding-block-start: var(--space-400);
+}
+
+/* Knowie's prompt: small mascot beside a tailed bubble. */
+.prompt {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-200);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-200);
+}
+
+
+/* ── Per-row icon accent ─────────────────────────────────────────────────────
+   Figma draws a different accent colour on each row's notebook. `TopicPromo`
+   has no icon or accent prop, and its glyph is a raw vector group, which
+   design-system.md already records as a known gap. It has no className prop
+   either, so the colour is set from here by position.
+
+   The rows are targeted with nth-child rather than wrapped, because a wrapper
+   element between role="radiogroup" and role="radio" would break the ownership
+   relationship a screen reader relies on. What each row inherits is the custom
+   property its icon fill reads, `--pro-accent`.
+
+   This is a deliberate local override, not a new token. The proper fix is an
+   accent prop on TopicPromo; when that lands, delete these four rules. Note
+   that the Main Screen chip rail will not inherit any of this, because the
+   logic lives in the screen rather than the component. */
+
+.list > *:nth-child(1) {
+  --pro-accent: var(--accent-brand-bold);
+}
+
+.list > *:nth-child(2) {
+  --pro-accent: var(--accent-green-bold);
+}
+
+.list > *:nth-child(3) {
+  --pro-accent: var(--accent-coral-bold);
+}
+
+.list > *:nth-child(4) {
+  --pro-accent: var(--accent-magenta-bold);
+}

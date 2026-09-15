@@ -1,0 +1,32 @@
+/* Feedback almost there (13610:10477) and Feedback Negative (13610:10505).
+ * Identical structure; only the copy differs. */
+
+.root {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-400);
+  padding-block-start: var(--space-400);
+}
+
+.prompt {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-200);
+}
+
+/* Two choices side by side, equal width. Neither is the safe option: taking the
+ * hint and trying again are both legitimate, and the ladder does not punish
+ * either. */
+.choices {
+  display: flex;
+  gap: var(--space-300);
+}
+
+.choice {
+  flex: 1 1 0;
+}
+
+.choice > * {
+  inline-size: 100%;
+}

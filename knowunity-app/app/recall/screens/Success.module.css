@@ -1,0 +1,149 @@
+/* Success screen. No Figma frame. Three headline variants, one shared breakdown. */
+
+.root {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-600);
+  padding-block-start: var(--space-400);
+  padding-block-end: var(--space-400);
+  overflow-y: auto;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-400);
+  text-align: center;
+}
+
+.heading {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--typography-headline-m-family);
+  font-size: var(--typography-headline-m-size);
+  font-weight: var(--typography-headline-m-weight);
+  line-height: var(--typography-headline-m-line-height);
+  letter-spacing: var(--typography-headline-m-letter-spacing);
+}
+
+.body {
+  margin: 0;
+  color: var(--text-secondary);
+  font-family: var(--typography-body-m-regular-family);
+  font-size: var(--typography-body-m-regular-size);
+  font-weight: var(--typography-body-m-regular-weight);
+  line-height: var(--typography-body-m-regular-line-height);
+  letter-spacing: var(--typography-body-m-regular-letter-spacing);
+}
+
+/* ── Breakdown ───────────────────────────────────────────────────────────────
+   The headline makes the claim; this is the evidence for it. Kept plain on
+   purpose: a chart would dress up numbers that only matter as counts. */
+
+.breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-100);
+  padding: var(--space-400);
+  border-radius: var(--radius-600);
+  background-color: var(--background-surface);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-300);
+  padding-block: var(--space-200);
+}
+
+.rowLabel {
+  color: var(--text-secondary);
+  font-family: var(--typography-body-s-regular-family);
+  font-size: var(--typography-body-s-regular-size);
+  font-weight: var(--typography-body-s-regular-weight);
+  line-height: var(--typography-body-s-regular-line-height);
+}
+
+.rowValue {
+  color: var(--text-primary);
+  font-family: var(--typography-body-s-bold-family);
+  font-size: var(--typography-body-s-bold-size);
+  font-weight: var(--typography-body-s-bold-weight);
+  line-height: var(--typography-body-s-bold-line-height);
+}
+
+/* The unaided row is the one that carries the claim, so it reads first. */
+.rowLead .rowLabel,
+.rowLead .rowValue {
+  color: var(--text-primary);
+  font-family: var(--typography-body-m-bold-family);
+  font-size: var(--typography-body-m-bold-size);
+  font-weight: var(--typography-body-m-bold-weight);
+  line-height: var(--typography-body-m-bold-line-height);
+}
+
+/* ── Review list ─────────────────────────────────────────────────────────────
+   Filled automatically by outcome: hinted, revealed and skipped terms, never
+   unaided ones. This is where retention lives, so it is a list of things to do
+   rather than a list of things that went wrong. */
+
+.review {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-300);
+}
+
+.reviewTitle {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--typography-body-m-bold-family);
+  font-size: var(--typography-body-m-bold-size);
+  font-weight: var(--typography-body-m-bold-weight);
+  line-height: var(--typography-body-m-bold-line-height);
+}
+
+.reviewList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-200);
+}
+
+.reviewItem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-300);
+  padding: var(--space-300);
+  border-radius: var(--radius-400);
+  background-color: var(--background-surface);
+  color: var(--text-primary);
+  font-family: var(--typography-body-s-regular-family);
+  font-size: var(--typography-body-s-regular-size);
+  font-weight: var(--typography-body-s-regular-weight);
+  line-height: var(--typography-body-s-regular-line-height);
+}
+
+.reviewTag {
+  flex: none;
+  padding-inline: var(--space-200);
+  border-radius: var(--radius-100);
+  background-color: var(--accent-brand-subtle);
+  color: var(--accent-brand-on-subtle);
+  font-family: var(--typography-caption-m-bold-family);
+  font-size: var(--typography-caption-m-bold-size);
+  font-weight: var(--typography-caption-m-bold-weight);
+  line-height: var(--typography-caption-m-bold-line-height);
+}
+
+/* ── Actions ─────────────────────────────────────────────────────────────── */
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-200);
+}

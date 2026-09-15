@@ -1,0 +1,51 @@
+.root {
+  display: flex;
+  align-items: center;
+  gap: var(--space-300);
+  background-color: var(--background-surface);
+  border-radius: var(--radius-400);
+  padding: var(--space-300);
+}
+
+/* ── Play/pause button ────────────────────────────────────────────────────── */
+
+.playBtn {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--touch-target-minimum);
+  block-size: var(--touch-target-minimum);
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+  border-radius: var(--radius-full);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.playBtn:focus-visible {
+  outline: var(--stroke-heavy-border) solid var(--border-focus);
+}
+
+/* ── Waveform ─────────────────────────────────────────────────────────────── */
+
+.waveform {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  block-size: var(--touch-target-minimum);
+}
+
+.waveTrack {
+  flex: 1;
+  block-size: 2px;
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--text-tertiary) 0,
+    var(--text-tertiary) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+  border-radius: 1px;
+}

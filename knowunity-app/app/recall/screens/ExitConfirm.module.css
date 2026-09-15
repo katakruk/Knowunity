@@ -1,0 +1,64 @@
+/* Exit confirmation. No Figma frame, and no dialog or sheet component exists in
+ * the library, so the surface is built here from tokens. */
+
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background-color: var(--background-scrim);
+  /* The sheet sits at the bottom, in reach of a thumb, not centred where a
+   * desktop dialog would go. */
+  padding: var(--space-400);
+  padding-block-end: calc(var(--space-400) + env(safe-area-inset-bottom));
+}
+
+.sheet {
+  inline-size: 100%;
+  /* Matches the phone canvas so the sheet never outgrows it on a wide window. */
+  max-inline-size: 358px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-400);
+  padding: var(--space-600);
+  border-radius: var(--radius-800);
+  /* background.floating is glass at 60% and the system has no blur token to pair
+   * with it, so it is layered over an opaque background.surface rather than left
+   * see-through. Same layering pattern design-system.md documents for Topic Promo,
+   * where background.stacking sits on top of background.surface. The missing blur
+   * token is logged in component-gaps.md. */
+  background-color: var(--background-surface);
+  background-image: linear-gradient(var(--background-floating), var(--background-floating));
+}
+
+.heading {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--typography-headline-s-family);
+  font-size: var(--typography-headline-s-size);
+  font-weight: var(--typography-headline-s-weight);
+  line-height: var(--typography-headline-s-line-height);
+  letter-spacing: var(--typography-headline-s-letter-spacing);
+}
+
+.body {
+  margin: 0;
+  color: var(--text-secondary);
+  font-family: var(--typography-body-m-regular-family);
+  font-size: var(--typography-body-m-regular-size);
+  font-weight: var(--typography-body-m-regular-weight);
+  line-height: var(--typography-body-m-regular-line-height);
+  letter-spacing: var(--typography-body-m-regular-letter-spacing);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-200);
+}
+
+/* Staying is the primary action and sits first, because the dialog exists to
+ * prevent accidental loss rather than to speed up leaving. Leaving is still one
+ * tap away: never trap the student. */

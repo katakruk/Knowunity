@@ -1,0 +1,93 @@
+/* Main Screen. Figma 13610:10167. */
+
+.root {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-600);
+  min-block-size: 0;
+}
+
+/* ── Focal Speak to Learn ────────────────────────────────────────────────────
+   Not a bespoke card: the frame centres the same `TopicChip` the rail uses, with
+   a mascot and a headline above it. So the demotion is a change of position, not
+   a different component. */
+
+.focal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-400);
+  text-align: center;
+}
+
+.headline {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--typography-headline-m-family);
+  font-size: var(--typography-headline-m-size);
+  font-weight: var(--typography-headline-m-weight);
+  line-height: var(--typography-headline-m-line-height);
+  letter-spacing: var(--typography-headline-m-letter-spacing);
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--text-secondary);
+  font-family: var(--typography-body-s-regular-family);
+  font-size: var(--typography-body-s-regular-size);
+  font-weight: var(--typography-body-s-regular-weight);
+  line-height: var(--typography-body-s-regular-line-height);
+}
+
+/* ── Resume offer ────────────────────────────────────────────────────────────
+   An unfinished session comes back as a message from Knowie in the thread, since
+   the chat is the only entry point and a message is what the student already
+   expects there. A completed session leaves no trace at all. */
+
+.thread {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-300);
+}
+
+.message {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-200);
+}
+
+.resumeAction {
+  align-self: flex-start;
+  padding-inline-start: var(--space-1200);
+}
+
+/* ── Chip rail ───────────────────────────────────────────────────────────────
+   Scrolls horizontally and runs to the screen edge, so it has to escape the
+   Scaffold's 16px content margins and re-apply them as padding. */
+
+.rail {
+  display: flex;
+  gap: var(--space-200);
+  margin-inline: calc(-1 * var(--space-400));
+  padding-inline: var(--space-400);
+  padding-block: var(--space-200);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.rail::-webkit-scrollbar {
+  display: none;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-300);
+}
+
+/* The navbar runs edge to edge, unlike the chat input above it. */
+.navbar {
+  margin-inline: calc(-1 * var(--space-400));
+}

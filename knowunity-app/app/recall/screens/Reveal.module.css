@@ -1,0 +1,41 @@
+/* Reveal. No Figma frame. */
+
+.root {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-400);
+  padding-block-start: var(--space-400);
+}
+
+.prompt {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-200);
+}
+
+/* Saved-to-review confirmation. Quiet: it is a reassurance, not an achievement,
+ * and this is the lowest point in the session. It exists so the summary's review
+ * list is visibly earned rather than appearing from nowhere at the end. */
+.saved {
+  display: flex;
+  align-items: center;
+  gap: var(--space-200);
+  align-self: flex-start;
+  padding-inline: var(--space-300);
+  padding-block: var(--space-200);
+  border-radius: var(--radius-full);
+  background-color: var(--background-surface);
+  color: var(--text-secondary);
+  font-family: var(--typography-caption-m-regular-family);
+  font-size: var(--typography-caption-m-regular-size);
+  font-weight: var(--typography-caption-m-regular-weight);
+  line-height: var(--typography-caption-m-regular-line-height);
+  letter-spacing: var(--typography-caption-m-regular-letter-spacing);
+}
+
+.savedIcon {
+  inline-size: var(--icon-150);
+  block-size: var(--icon-150);
+  flex: none;
+}

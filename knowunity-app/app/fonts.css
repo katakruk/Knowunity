@@ -1,0 +1,31 @@
+/* Greed, the Knowunity brand typeface.
+ *
+ * Every typography token in styles/tokens.css resolves through
+ * --font-family-greed to the family name 'Greed VF-TRIAL', which is the exact
+ * name in this file's OpenType name table. Do not rename it here or the tokens
+ * stop resolving.
+ *
+ * This is the variable collection cut, one file for every weight and width.
+ * Its three axes, read from the fvar table:
+ *
+ *   wght  300 → 900, default 300
+ *   wdth   75 → 130, default 75
+ *   slnt  -14 → 0,   default 0
+ *
+ * Both defaults matter. The default weight is Light and the default width is
+ * Condensed, so anything that does not set a weight and a width renders as
+ * Greed Condensed Light. `font-stretch: 100%` on body pins the width to
+ * Standard, which is what the Figma frames use. The weight comes from the
+ * typography tokens.
+ *
+ * TRIAL licence: fine for local development and a password-protected deploy.
+ * Check the EULA before putting this on a public URL.
+ */
+@font-face {
+  font-family: 'Greed VF-TRIAL';
+  src: url('/fonts/GreedCollectionVF-TRIAL.woff2') format('woff2-variations');
+  font-weight: 300 900;
+  font-stretch: 75% 130%;
+  font-style: normal;
+  font-display: swap;
+}

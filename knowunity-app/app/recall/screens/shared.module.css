@@ -1,0 +1,15 @@
+/* Shared bits across the recall screens. */
+
+/* A full-width primary CTA in the thumb-zone footer.
+ *
+ * `Button` is deliberately narrow by default: its <button> is only the touch
+ * target and the visual pill is a child, so the S and M pills do not stretch to
+ * meet the 48px floor (see Button.module.css). Stretching a footer CTA
+ * therefore means widening both the target and the pill inside it. */
+.cta {
+  inline-size: 100%;
+}
+
+.cta > * {
+  inline-size: 100%;
+}
