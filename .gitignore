@@ -1,2 +1,16 @@
 **/.DS_Store
 .DS_Store
+
+# dependencies
+node_modules/
+
+# env files
+.env*
+
+# local agent config (can contain access tokens)
+.claude/settings.local.json
+
+# build output
+dist/
+build/
+out/
